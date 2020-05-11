@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.safestring import mark_safe
 
 # Create your models here.
 
@@ -44,6 +45,14 @@ class Product(models.Model):
 
     #methos to create a fake database table field in read only mode
     def image_tag(self):
-        return marksafe('<img src"{}" height="50"/>'.format(self.image.url))
+        return mark_safe('<image src="{}" height="100" width="100"/>'.format(self.image.url))
+    image_tag.short_description = "Image"
+    image_tag.allow_tags = True
 
-    image_tag.shortdescription = 'Image'
+class Images(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    title = models.CharField(max_length=50,blank=True)
+    image = models.ImageField(blank=True,upload_to='images/')
+
+    def __str__(self):
+        return self.title
