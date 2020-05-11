@@ -42,3 +42,8 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
+    #methos to create a fake database table field in read only mode
+    def image_tag(self):
+        return marksafe('<img src"{}" height="50"/>'.format(self.image.url))
+
+    image_tag.shortdescription = 'Image'
