@@ -3,7 +3,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 # Create your models here.
 
-class Settings(models.Model):
+class Setting(models.Model):
     STATUS = (
         ('True', 'True'),
         ('False', 'False'),
