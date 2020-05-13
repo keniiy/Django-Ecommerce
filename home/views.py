@@ -4,13 +4,18 @@ from home.models import Setting
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from home.models import ContactForm, ContactMessages
+from product.models import Category
 # Create your views here.
+
+
 def index(request):
     setting = Setting.objects.get(pk=1)
+    category = Category.objects.all()
     page = "home"
     context = {
         'setting': setting,
-        'page': page
+        'page': page,
+        'category': category
     }
     return render(request, 'index.html',context)
 
