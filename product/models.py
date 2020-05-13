@@ -26,6 +26,16 @@ class Category(MPTTModel):
     class MPTTMeta:
         order_insertion_by = ['title']
 
+    def __str__(self):                           # __str__ method elaborated later in
+        full_path = [self.title]                  # post.  use __unicode__ in place of
+        k = self.parent
+        while k is not None:
+            full_path.append(k.title)
+            k = k.parent
+        return ' / '.join(full_path[::-1])
+
+
+
 class Product(models.Model):
     STATUS = (
         ('True', 'True'),

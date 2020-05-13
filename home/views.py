@@ -4,7 +4,7 @@ from home.models import Setting
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from home.models import ContactForm, ContactMessages
-from product.models import Category
+from product.models import Category, Product
 # Create your views here.
 
 
@@ -50,3 +50,7 @@ def contactus(request):
         'form': form
     }
     return render(request, 'contact.html',context)
+
+def category_products(request,id,slug):
+    products = Product.objects.filter(category_id=id)
+    return HttpResponse(products)
