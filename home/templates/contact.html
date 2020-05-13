@@ -31,38 +31,35 @@
                 <div class="row">
                     
                         <div class="col-md-4">
-                                <form id="checkout-form" class="clearfix">
-                            <div class="billing-details">
-                                
-                                <div class="section-title">
-                                    <h1 class="title">Contact Form</h1>
-                                </div>
-                                <div class="form-group">
-                                    <input class="input" type="text" name="Name" placeholder="Name">
-                                </div>
-                                <div class="form-group">
-                                    <input class="input" type="email" name="email" placeholder="Email">
-                                </div>
-                                <div class="form-group">
-                                    <input class="input" type="tel" name="tel" placeholder="Telephone">
-                                </div>
-                                <div class="form-group">
-                                    <input class="input" type="text" name="Subject" placeholder="Subject">
-                                </div>
-                                <div class="form-group">
-                                    <textarea class="input" type="text" name="Message" placeholder="Your Message"> </textarea>
-                                </div>
-                                <div class="form-group">
-                                    <input class="input" type="submit" name="Send Message">
-                                </div>
-                            </div>
-           
+                                <div class="billing-details">
+
+                                        <div class="section-title">
+                                            <h3 class="title">Contact Form</h3>
+                
+                                        </div>
+                
+                                        {% if messages %}
+                                            {% for message in messages %}
+                                                <div class="alert alert-{{message.tags}}" role="alert">
+                                                    {{ message }}
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                
+                                        <form id="checkout-form" class="clearfix" method="post">
+                                            {% csrf_token %}
+                                            {{ form.as_p }}
+                                            <input type="submit" value="SEND FORM">
+                                        </form>
+                
+                
+                                    </div>
                         </div>
 
                         <div class="col-md-8">
                                 <div class="shiping-methods">
                                     <div class="section-title">
-                                        <h1 class="title">Contact İnformation</h1>
+                                        <h3 class="title">Contact İnformation</h3>
                                     </div>
                                     {{ setting.contact | safe }}
                                 </div>

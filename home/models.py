@@ -1,6 +1,6 @@
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
-
+from django.forms import ModelForm, Textarea, TextInput, Select
 # Create your models here.
 
 class Setting(models.Model):
@@ -34,3 +34,35 @@ class Setting(models.Model):
 
     def __str__(self):
         return self.title
+
+class ContactMessages(models.Model):
+    STATUS = (
+        ('New', 'New'),
+        ('Read', 'Read'),
+        ('Closed', 'Closed'),
+    )
+    name = models.CharField(max_length=20)
+    email = models.CharField(max_length=50)
+    subject = models.CharField(max_length=100)
+    message = models.TextField(max_length=255)
+    telephone = models.CharField(max_length=14)
+    status = models.CharField(choices=STATUS,max_length=6,default='New')
+    ip_address = models.CharField(blank=True,max_length=20)
+    note = models.CharField(blank=True,max_length=100)
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+class ContactForm(ModelForm):
+    class Meta:
+        model = ContactMessages
+        fields = ['name', 'email', 'subject','telephone','message']
+        widgets = {
+            'name'   : TextInput(attrs={'class': 'input','placeholder':'Name & Surname'}),
+            'subject' : TextInput(attrs={'class': 'input','placeholder':'Subject'}),
+            'email'   : TextInput(attrs={'class': 'input','placeholder':'Email Address'}),
+            'telephone'   : TextInput(attrs={'class': 'input','placeholder':'Phone No'}),
+            'message' : Textarea(attrs={'class': 'input','placeholder':'Your Message', 'row':'7 '}),
+        }
