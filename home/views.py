@@ -61,8 +61,6 @@ def category_products(request,id,slug):
     category = Category.objects.all()
     products = Product.objects.filter(category_id=id)
     context = {
-        'setting': setting,
-        'page': page,
         'products': products,
         'category': category
     }
