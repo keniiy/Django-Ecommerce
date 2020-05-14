@@ -58,5 +58,12 @@ def contactus(request):
     return render(request, 'contact.html',context)
 
 def category_products(request,id,slug):
+    category = Category.objects.all()
     products = Product.objects.filter(category_id=id)
-    return HttpResponse(products)
+    context = {
+        'setting': setting,
+        'page': page,
+        'products': products,
+        'category': category
+    }
+    return render(request, 'category_product.html', context)
