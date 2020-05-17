@@ -60,6 +60,8 @@ Table OF Contents
 	Typography
 \*----------------------------*/
 
+
+
 body {
   font-family: 'Hind', sans-serif;
   color: #4A4E5A;
@@ -357,6 +359,16 @@ textarea.input {
   display: inline-block;
   padding: 15px 0px;
   max-width: 400px;
+}
+
+.header-search>select {
+  position: relative;
+  background-color: transparent;
+}
+
+.header-search>select .option {
+  padding-left: 150px;
+  padding-right: 45px;
 }
 
 .header-search>form {

@@ -5,6 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from home.models import ContactForm, ContactMessages
 from product.models import Category, Product
+from home.forms import SearchForm
+from django.db.models import Q
 # Create your views here.
 
 
@@ -14,6 +16,15 @@ def index(request):
     products_slider = Product.objects.all().order_by('id')[:4]
     products_latest = Product.objects.all().order_by('-id')[:4]
     products_picked = Product.objects.all().order_by('?')[:4]
+    prdouct_banner1 = Product.objects.all().order_by('?')[:1]
+    prdouct_banner2 = Product.objects.all().order_by('?')[:4]
+    new_arrival = list(Product.objects.filter(new_arrival=True).order_by('id'))[0:10]
+    products_all = list(Product.objects.all().order_by('id'))[0:10]
+    products_men = list(Product.objects.filter(men_home=True).order_by('id'))[0:10]
+    products_women = list(Product.objects.filter(women_home=True).order_by('id'))[0:10]
+    products_discount = list(Product.objects.filter(discount_home=True).order_by('id'))[0:10]
+    products_kids = list(Product.objects.filter(kids_home=True).order_by('id'))[0:10]
+
     page = "home"
     context = {
         'setting': setting,
@@ -21,9 +32,18 @@ def index(request):
         'products_slider': products_slider,
         'products_latest': products_latest,
         'products_picked': products_picked,
+        'prdouct_banner1': prdouct_banner1,
+        'prdouct_banner2': prdouct_banner2,
+        'new_arrival': new_arrival,
+        'products_all': products_all,
+        'products_men': products_men,
+        'products_women': products_women,
+        'products_discount': products_discount,
+        'products_kids': products_kids,
         'category': category
+        
     }
-    return render(request, 'index.html',context)
+    return render(request, 'homepage.html',context)
 
 def aboutus(request):
     setting = Setting.objects.get(pk=1)
@@ -64,4 +84,23 @@ def category_products(request,id,slug):
         'products': products,
         'category': category
     }
-    return render(request, 'category_product.html', context)
+    return render(request, 'category_products.html', context)
+
+
+def search(request):
+    queryset = Product.objects.all()
+    query = request.GET.get('q')
+    if query:
+        queryset = queryset.filter(
+            Q(title__icontains=query) |
+            Q(description__icontains=query) 
+        ).distinct()
+    else:
+        queryset = Product.objects.all()
+
+    category = Category.objects.all()
+    context = {
+        'queryset': queryset,
+        'category': category
+    }
+    return render(request, 'search_products.html', context)

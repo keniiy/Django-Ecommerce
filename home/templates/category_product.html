@@ -206,283 +206,45 @@
 					<div id="store">
 						<!-- row -->
 						<div class="row">
-							<!-- Product Single -->
-							<div class="col-md-4 col-sm-6 col-xs-6">
-								<div class="product product-single">
-									<div class="product-thumb">
-										<div class="product-label">
-											<span>New</span>
-											<span class="sale">-20%</span>
-										</div>
-										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="./img/product01.jpg" alt="">
-									</div>
-									<div class="product-body">
-										<h3 class="product-price">₦32.50 <del class="product-old-price">₦45.00</del></h3>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o empty"></i>
-										</div>
-										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-										<div class="product-btns">
-											<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-											<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-											<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-										</div>
-									</div>
-								</div>
+						
+						<div class="col-md-12">
+						<div class="order-summary clearfix">
+							<div class="section-title">
+								<h3 class="title">Product List</h3>
 							</div>
-							<!-- /Product Single -->
+							<table class="shopping-cart-table table">
+								<thead>
+									<tr>
+										<th>Product</th>
+										<th></th>
+										<th class="text-center">Price</th>
+										<th class="text-center">Quantity</th>
+										<th class="text-center">Total</th>
+										<th class="text-right"></th>
+									</tr>
+								</thead>
+								<tbody>
 
-							<!-- Product Single -->
-							<div class="col-md-4 col-sm-6 col-xs-6">
-								<div class="product product-single">
-									<div class="product-thumb">
-										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="./img/product02.jpg" alt="">
-									</div>
-									<div class="product-body">
-										<h3 class="product-price">₦32.50</h3>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o empty"></i>
-										</div>
-										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-										<div class="product-btns">
-											<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-											<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-											<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
+								{% for rs in products %}
+									<tr>
+										<td class="thumb"><img src="{{ rs.image.url }} " alt="" height="100px" width="250px" overflow="hidden"></td>
+										<td class="details"><a href="#">Product Name Goes Here</a></td>
 
-							<div class="clearfix visible-sm visible-xs"></div>
+										<td class="price text-center"><strong>₦{{ rs.price }}</strong><br><del class="font-weak"><small>$40.00</small></del></td>
+										<td class="qty text-center"><input class="input" type="number" value="1"></td>
+										<td class="total text-center"><strong class="primary-color">₦{{ rs.price }}</strong></td>
+										<td class="text-right"><button class="main-btn icon-btn"><i class="fa fa-close"></i></button></td>
+									</tr>
+								{% endfor %}
 
-							<!-- Product Single -->
-							<div class="col-md-4 col-sm-6 col-xs-6">
-								<div class="product product-single">
-									<div class="product-thumb">
-										<div class="product-label">
-											<span>New</span>
-											<span class="sale">-20%</span>
-										</div>
-										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="./img/product03.jpg" alt="">
-									</div>
-									<div class="product-body">
-										<h3 class="product-price">₦32.50 <del class="product-old-price">₦45.00</del></h3>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o empty"></i>
-										</div>
-										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-										<div class="product-btns">
-											<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-											<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-											<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
+								</tbody>
+								
+							</table>
+							 
+						</div>
 
-							<div class="clearfix visible-md visible-lg"></div>
+					</div>
 
-							<!-- Product Single -->
-							<div class="col-md-4 col-sm-6 col-xs-6">
-								<div class="product product-single">
-									<div class="product-thumb">
-										<div class="product-label">
-											<span>New</span>
-										</div>
-										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="./img/product04.jpg" alt="">
-									</div>
-									<div class="product-body">
-										<h3 class="product-price">₦32.50</h3>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o empty"></i>
-										</div>
-										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-										<div class="product-btns">
-											<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-											<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-											<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
-
-							<div class="clearfix visible-sm visible-xs"></div>
-
-							<!-- Product Single -->
-							<div class="col-md-4 col-sm-6 col-xs-6">
-								<div class="product product-single">
-									<div class="product-thumb">
-										<div class="product-label">
-											<span>New</span>
-										</div>
-										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="./img/product05.jpg" alt="">
-									</div>
-									<div class="product-body">
-										<h3 class="product-price">₦32.50</h3>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o empty"></i>
-										</div>
-										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-										<div class="product-btns">
-											<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-											<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-											<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
-
-							<!-- Product Single -->
-							<div class="col-md-4 col-sm-6 col-xs-6">
-								<div class="product product-single">
-									<div class="product-thumb">
-										<div class="product-label">
-											<span>New</span>
-											<span class="sale">-20%</span>
-										</div>
-										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="./img/product06.jpg" alt="">
-									</div>
-									<div class="product-body">
-										<h3 class="product-price">₦32.50 <del class="product-old-price">₦45.00</del></h3>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o empty"></i>
-										</div>
-										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-										<div class="product-btns">
-											<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-											<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-											<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
-
-							<div class="clearfix visible-md visible-lg visible-sm visible-xs"></div>
-
-							<!-- Product Single -->
-							<div class="col-md-4 col-sm-6 col-xs-6">
-								<div class="product product-single">
-									<div class="product-thumb">
-										<div class="product-label">
-											<span>New</span>
-											<span class="sale">-20%</span>
-										</div>
-										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="./img/product07.jpg" alt="">
-									</div>
-									<div class="product-body">
-										<h3 class="product-price">₦32.50 <del class="product-old-price">₦45.00</del></h3>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o empty"></i>
-										</div>
-										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-										<div class="product-btns">
-											<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-											<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-											<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
-
-							<!-- Product Single -->
-							<div class="col-md-4 col-sm-6 col-xs-6">
-								<div class="product product-single">
-									<div class="product-thumb">
-										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="./img/product08.jpg" alt="">
-									</div>
-									<div class="product-body">
-										<h3 class="product-price">₦32.50</h3>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o empty"></i>
-										</div>
-										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-										<div class="product-btns">
-											<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-											<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-											<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
-
-							<div class="clearfix visible-sm visible-xs"></div>
-
-							<!-- Product Single -->
-							<div class="col-md-4 col-sm-6 col-xs-6">
-								<div class="product product-single">
-									<div class="product-thumb">
-										<div class="product-label">
-											<span class="sale">-20%</span>
-										</div>
-										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="./img/product01.jpg" alt="">
-									</div>
-									<div class="product-body">
-										<h3 class="product-price">₦32.50 <del class="product-old-price">₦45.00</del></h3>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o empty"></i>
-										</div>
-										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-										<div class="product-btns">
-											<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-											<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-											<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
 						</div>
 						<!-- /row -->
 					</div>
