@@ -24,6 +24,11 @@
     <link rel="stylesheet" href="{% static '' %}assets/css/style.css">
     <link rel="stylesheet" href="{% static '' %}assets/css/responsive.css">
     <script src="{% static '/' %}assets/js/vendor/modernizr-2.8.3.min.js"></script>
+    <!-- jQuery !-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
+    <!-- jQuery UI !-->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 </head>
 
 <body>
@@ -31,6 +36,13 @@
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
     <!-- header start -->
+    <div class="col-12">
+        {% for message in messages %}
+            <div class="alert alert-{{message.tags}}" role="alert">
+                    {{ message }}
+            </div>
+        {% endfor %}
+    </div>
   
     <header>
         <div class="header-area">
@@ -51,7 +63,7 @@
                                 <div class="mega-menu-dropdown mega-dropdown-width">
                                   <ul>
                                         {% if not node.is_leaf_node %}
-                                        <Li><h4 class="mega-subtitle">Sub Categories</h4></li>
+                                        <li><h4 class="mega-subtitle">Sub Categories</h4></li>
                                             <li><a href="/category/{{ node.id }}/{{ node.slug }}"> {{children}} </a></li>
                                             <div class="mega-banner-img-2">
                                                   <a><img src="{{node.image.url}}" height="400px" width="500px" overflow="hidden" alt="" alt=""></a>
@@ -102,8 +114,8 @@
                         </a>
                     </div>
                     <div class="header-search">
-                        <form action="{% url 'search' %}">
-                            <input type="text" name="q" placeholder="Search What you want">
+                        <form action="{% url 'search' %}"> 
+                            <input type="text" name="q" placeholder="Search For Product">
                             <button type="submit" class="submit">
                                 <i class="ti-search"></i>
                             </button>
@@ -118,63 +130,10 @@
                     </div>
                     
                     <div class="header-cart cart-res">
-                        <a class="icon-cart" href="#">
+                        <a class="icon-cart" href="/shopcart/">
                             <i class="ti-shopping-cart"></i>
                             <span class="shop-count pink">02</span>
                         </a>
-                        <ul class="cart-dropdown">
-                            <li class="single-product-cart">
-                                <div class="cart-img">
-                                    <a href="#"><img src="{% static '' %}assets/img/cart/1.jpg" alt=""></a>
-                                </div>
-                                <div class="cart-title">
-                                    <h5><a href="#"> Bits Headphone</a></h5>
-                                    <h6><a href="#">Black</a></h6>
-                                    <span>$80.00 x 1</span>
-                                </div>
-                                <div class="cart-delete">
-                                    <a href="#"><i class="ti-trash"></i></a>
-                                </div>
-                            </li>
-                            <li class="single-product-cart">
-                                <div class="cart-img">
-                                    <a href="#"><img src="{% static '' %}assets/img/cart/2.jpg" alt=""></a>
-                                </div>
-                                <div class="cart-title">
-                                    <h5><a href="#"> Bits Headphone</a></h5>
-                                    <h6><a href="#">Black</a></h6>
-                                    <span>$80.00 x 1</span>
-                                </div>
-                                <div class="cart-delete">
-                                    <a href="#"><i class="ti-trash"></i></a>
-                                </div>
-                            </li>
-                            <li class="single-product-cart">
-                                <div class="cart-img">
-                                    <a href="#"><img src="{% static '' %}assets/img/cart/3.jpg" alt=""></a>
-                                </div>
-                                <div class="cart-title">
-                                    <h5><a href="#"> Bits Headphone</a></h5>
-                                    <h6><a href="#">Black</a></h6>
-                                    <span>$80.00 x 1</span>
-                                </div>
-                                <div class="cart-delete">
-                                    <a href="#"><i class="ti-trash"></i></a>
-                                </div>
-                            </li>
-                            <li class="cart-space">
-                                <div class="cart-sub">
-                                    <h4>Subtotal</h4>
-                                </div>
-                                <div class="cart-price">
-                                    <h4>$240.00</h4>
-                                </div>
-                            </li>
-                            <li class="cart-btn-wrapper">
-                                <a class="cart-btn btn-hover" href="#">view cart</a>
-                                <a class="cart-btn btn-hover" href="#">checkout</a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
                 <div class="mobile-menu-area clearfix d-md-block col-md-12 col-lg-12 col-12 d-lg-none d-xl-none">
@@ -282,12 +241,13 @@
                                     <a class="animate-left" title="Wishlist" href="#">
                                         <i class="pe-7s-like"></i>
                                     </a>
-                                    <a class="animate-top" title="Add To Cart" href="#">
+                                    <a class="animate-top" title="Add To Cart" href="/order/addtoshopcart/{{ rs.id }}">
                                         <i class="pe-7s-cart"></i>
                                     </a>
-                                    <a class="animate-right" title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#">
-                                        <i class="pe-7s-look"></i>
-                                    </a>
+                                        <a class="animate-right" title="Quick View"  href="/product/{{ rs.id }}/{{ rs.slug }}">
+                                            <i class="pe-7s-look"></i>
+                                        </a>
+                                    </Button>
                                 </div>
                             </div>
                             <div class="product-content">
@@ -345,10 +305,10 @@
                                                 <a class="animate-left" title="Wishlist" href="#">
                                                     <i class="pe-7s-like"></i>
                                                 </a>
-                                                <a class="animate-top" title="Add To Cart" href="#">
+                                                <a class="animate-top" title="Add To Cart" href="/order/addtoshopcart/{{ rs.id }}">
                                                     <i class="pe-7s-cart"></i>
                                                 </a>
-                                                <a class="animate-right" title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#">
+                                                <a class="animate-right" title="Quick View"  href="/product/{{ rs.id }}/{{ rs.slug }}">
                                                     <i class="pe-7s-look"></i>
                                                 </a>
                                             </div>
@@ -378,10 +338,10 @@
                                                 <a class="animate-left" title="Wishlist" href="#">
                                                     <i class="pe-7s-like"></i>
                                                 </a>
-                                                <a class="animate-top" title="Add To Cart" href="#">
+                                                <a class="animate-top" title="Add To Cart" href="/order/addtoshopcart/{{ rs.id }}">
                                                     <i class="pe-7s-cart"></i>
                                                 </a>
-                                                <a class="animate-right" title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#">
+                                                <a class="animate-right" title="Quick View"  href="/product/{{ rs.id }}/{{ rs.slug }}">
                                                     <i class="pe-7s-look"></i>
                                                 </a>
                                             </div>
@@ -412,10 +372,10 @@
                                                 <a class="animate-left" title="Wishlist" href="#">
                                                     <i class="pe-7s-like"></i>
                                                 </a>
-                                                <a class="animate-top" title="Add To Cart" href="#">
+                                                <a class="animate-top" title="Add To Cart" href="/order/addtoshopcart/{{ rs.id }}">
                                                     <i class="pe-7s-cart"></i>
                                                 </a>
-                                                <a class="animate-right" title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#">
+                                                <a class="animate-right" title="Quick View"  href="/product/{{ rs.id }}/{{ rs.slug }}">
                                                     <i class="pe-7s-look"></i>
                                                 </a>
                                             </div>
@@ -443,13 +403,13 @@
                                             </a>
                                             
                                             <div class="product-action">
-                                                <a class="animate-left" title="Wishlist" href="#">
+                                                <a class="animate-left" title="Wishlist" href="/order/addtoshopcart/{{ rs.id }}">
                                                     <i class="pe-7s-like"></i>
                                                 </a>
                                                 <a class="animate-top" title="Add To Cart" href="#">
                                                     <i class="pe-7s-cart"></i>
                                                 </a>
-                                                <a class="animate-right" title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#">
+                                                <a class="animate-right" title="Quick View"  href="/product/{{ rs.id }}/{{ rs.slug }}">
                                                     <i class="pe-7s-look"></i>
                                                 </a>
                                             </div>
@@ -481,10 +441,10 @@
                                                 <a class="animate-left" title="Wishlist" href="#">
                                                     <i class="pe-7s-like"></i>
                                                 </a>
-                                                <a class="animate-top" title="Add To Cart" href="#">
+                                                <a class="animate-top" title="Add To Cart" href="/order/addtoshopcart/{{ rs.id }}">
                                                     <i class="pe-7s-cart"></i>
                                                 </a>
-                                                <a class="animate-right" title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#">
+                                                <a class="animate-right" title="Quick View"  href="/product/{{ rs.id }}/{{ rs.slug }}">
                                                     <i class="pe-7s-look"></i>
                                                 </a>
                                             </div>
@@ -620,114 +580,14 @@
             </div>
         </div>
     </footer>
-    <!-- modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span class="pe-7s-close" aria-hidden="true"></span>
-        </button>
-        <div class="modal-dialog modal-quickview-width" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="qwick-view-left">
-                        <div class="quick-view-learg-img">
-                            <div class="quick-view-tab-content tab-content">
-                                <div class="tab-pane active show fade" id="modal1" role="tabpanel">
-                                    <img src="{% static '' %}assets/img/quick-view/l1.jpg" alt="">
-                                </div>
-                                <div class="tab-pane fade" id="modal2" role="tabpanel">
-                                    <img src="{% static '' %}assets/img/quick-view/l2.jpg" alt="">
-                                </div>
-                                <div class="tab-pane fade" id="modal3" role="tabpanel">
-                                    <img src="{% static '' %}assets/img/quick-view/l3.jpg" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="quick-view-list nav" role="tablist">
-                            <a class="active" href="#modal1" data-toggle="tab" role="tab" aria-selected="true" aria-controls="home1">
-                                <img src="{% static '' %}assets/img/quick-view/s1.jpg" alt="">
-                            </a>
-                            <a href="#modal2" data-toggle="tab" role="tab" aria-selected="false" aria-controls="home2">
-                                <img src="{% static '' %}assets/img/quick-view/s2.jpg" alt="">
-                            </a>
-                            <a href="#modal3" data-toggle="tab" role="tab" aria-selected="false" aria-controls="home3">
-                                <img src="{% static '' %}assets/img/quick-view/s3.jpg" alt="">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="qwick-view-right">
-                        <div class="qwick-view-content">
-                            <h3>Handcrafted Supper Mug</h3>
-                            <div class="price">
-                                <span class="new">$90.00</span>
-                                <span class="old">$120.00  </span>
-                            </div>
-                            <div class="rating-number">
-                                <div class="quick-view-rating">
-                                    <i class="pe-7s-star"></i>
-                                    <i class="pe-7s-star"></i>
-                                    <i class="pe-7s-star"></i>
-                                    <i class="pe-7s-star"></i>
-                                    <i class="pe-7s-star"></i>
-                                </div>
-                                <div class="quick-view-number">
-                                    <span>2 Ratting (S)</span>
-                                </div>
-                            </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do tempor incididun ut labore et dolore magna aliqua. Ut enim ad mi , quis nostrud veniam exercitation .</p>
-                            <div class="quick-view-select">
-                                <div class="select-option-part">
-                                    <label>Size*</label>
-                                    <select class="select">
-                                        <option value="">- Please Select -</option>
-                                        <option value="">900</option>
-                                        <option value="">700</option>
-                                    </select>
-                                </div>
-                                <div class="select-option-part">
-                                    <label>Color*</label>
-                                    <select class="select">
-                                        <option value="">- Please Select -</option>
-                                        <option value="">orange</option>
-                                        <option value="">pink</option>
-                                        <option value="">yellow</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="quickview-plus-minus">
-                                <div class="cart-plus-minus">
-                                    <input type="text" value="02" name="qtybutton" class="cart-plus-minus-box">
-                                </div>
-                                <div class="quickview-btn-cart">
-                                    <a class="btn-hover-black" href="#">add to cart</a>
-                                </div>
-                                <div class="quickview-btn-wishlist">
-                                    <a class="btn-hover" href="#"><i class="pe-7s-like"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
     <!-- all js here -->
     <script src="{% static '/' %}assets/js/vendor/jquery-1.12.0.min.js"></script>
     <script src="{% static '/' %}assets/js/popper.js"></script>
     <script src="{% static '/' %}assets/js/bootstrap.min.js"></script>
-    <script src="{% static '/' %}assets/js/jquery.magnific-popup.min.js"></script>
+    
     <script src="{% static '/' %}assets/js/isotope.pkgd.min.js"></script>
     <script src="{% static '/' %}assets/js/imagesloaded.pkgd.min.js"></script>
-    <script src="{% static '/' %}assets/js/jquery.counterup.min.js"></script>
+    
     <script src="{% static '/' %}assets/js/waypoints.min.js"></script>
     <script src="{% static '/' %}assets/js/ajax-mail.js"></script>
     <script src="{% static '/' %}assets/js/owl.carousel.min.js"></script>

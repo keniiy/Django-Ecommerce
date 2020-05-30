@@ -4,9 +4,11 @@ from home.models import Setting
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from home.models import ContactForm, ContactMessages
-from product.models import Category, Product
+from product.models import Category, Product, Images
 from home.forms import SearchForm
 from django.db.models import Q
+import json
+from product.models import Comment
 # Create your views here.
 
 
@@ -80,27 +82,43 @@ def contactus(request):
 def category_products(request,id,slug):
     category = Category.objects.all()
     products = Product.objects.filter(category_id=id)
+    catdata = Category.objects.get(pk=id)
     context = {
         'products': products,
-        'category': category
+        'category': category,
+        'catdata': catdata
     }
     return render(request, 'category_products.html', context)
 
 
 def search(request):
-    queryset = Product.objects.all()
+    querysets = Product.objects.all()
     query = request.GET.get('q')
     if query:
-        queryset = queryset.filter(
+        querysets = querysets.filter(
             Q(title__icontains=query) |
             Q(description__icontains=query) 
         ).distinct()
     else:
-        queryset = Product.objects.all()
+        querysets = Product.objects.all()
+    
 
     category = Category.objects.all()
     context = {
-        'queryset': queryset,
+        'querysets': querysets,
         'category': category
     }
     return render(request, 'search_products.html', context)
+
+def product_detail(request,id,slug):
+    category = Category.objects.all()
+    product = Product.objects.get(pk=id)
+    images = Images.objects.filter(product_id=id)
+    comments = Comment.objects.filter(product_id=id,status='True')
+    context = {
+        'product': product,
+        'category': category,
+        'images': images,
+        'comments': comments
+    }
+    return render(request, 'product-details.html', context)
