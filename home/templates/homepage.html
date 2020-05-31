@@ -121,14 +121,21 @@
                             </button>
                         </form>
                     </div>
-                    
+                    {% if user.id is not none %}
+                        <div class="header-login">
+                            <ul>
+                                <li style="color:Black"><a> Welcome {{ user.first_name }}</a></li>
+                                <li><a href="">logout</a></li>
+                            </ul>
+                        </div>
+                    {% else %}
                     <div class="header-login">
-                        <ul>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Reg</a></li>
-                        </ul>
-                    </div>
-                    
+                            <ul>
+                                <li><a href="/login">Login</a></li>
+                                <li><a href="/signup">Reg</a></li>
+                            </ul>
+                        </div>
+                    {% endif %}
                     <div class="header-cart cart-res">
                         <a class="icon-cart" href="/shopcart/">
                             <i class="ti-shopping-cart"></i>
