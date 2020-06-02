@@ -353,8 +353,20 @@
 			<div class="inner">
 				<form action="" method="post">
                     {% csrf_token %}
-					<h3>login</h3>
+					<h3>Sign Up</h3>
 					<div class="form-wrappers">
+						<label>Username</label>
+						<input type="text" class="form-controls" name="username">
+					</div>
+                    <div class="form-wrappers">
+						<label>Username</label>
+						<input type="text" class="form-controls" name="username">
+					</div>
+                    <div class="form-wrappers">
+						<label>Username</label>
+						<input type="text" class="form-controls" name="username">
+					</div>
+                    <div class="form-wrappers">
 						<label>Username</label>
 						<input type="text" class="form-controls" name="username">
 					</div>
@@ -362,14 +374,14 @@
 						<label>Password</label>
 						<input type="password" class="form-controls" name="password">
 					</div>
-                    <button class="buttonl" value="login" type="submit">Login</button>
-				</form>
-                <div class="col-12">
+                    <button class="buttonl" value="login" type="submit">Sign Up</button>
+                    <div class="col-12">
                     <div class="form-wrappers">
-                            <label for="">Not yet a member Signup<b>?</b></label>
-                            <a href="/signup"><button class="button" style="color:black">SignUp</button></a>
+                            <label for="">Already registered<b>?</b></label>
+                            <button class="button"  style="color:black">Log In</button>
                     </div>
                 </div>
+				</form>
 			</div>
         </div>
 
