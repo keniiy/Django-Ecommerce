@@ -125,9 +125,14 @@
                         <div class="header-login">
                             <ul>
                                 <li style="color:Black"><a> Welcome {{ user.first_name }}</a></li>
-                                <li><a href="">logout</a></li>
+                                <li><a href="/logout">logout</a></li>
                             </ul>
                         </div>
+                        <div class="header-cart cart-res">
+
+                            <img src="{{ request.session.userimage }}" height="40px" width="40px" overflow="hidden" style="border-radius: 30px">
+
+                    </div>
                     {% else %}
                     <div class="header-login">
                             <ul>

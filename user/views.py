@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
@@ -34,4 +34,8 @@ def login_form(request):
     return render(request, 'login_form.html',context)
 
 def signup_form(request):
-    return HttpResponse("sign form")
+    return HttpResponse("signup form")
+
+def logout_func(request):
+    logout(request)
+    return HttpResponseRedirect('/')
