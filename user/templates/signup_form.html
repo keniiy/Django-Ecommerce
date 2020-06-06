@@ -350,38 +350,31 @@
 
         <!-- login-area start -->
         <div class="wrappers" style="background-image: url('{% static '' %}assets/signs/images/registration-form-2.jpg');">
-			<div class="inner">
+			<div style="height:1000px;width:500px;overflow:hidden;background-repeat:no-repeat" class="inner">
 				<form action="" method="post">
                     {% csrf_token %}
 					<h3>Sign Up</h3>
-					<div class="form-wrappers">
-						<label>Username</label>
-						<input type="text" class="form-controls" name="username">
-					</div>
-                    <div class="form-wrappers">
-						<label>Username</label>
-						<input type="text" class="form-controls" name="username">
-					</div>
-                    <div class="form-wrappers">
-						<label>Username</label>
-						<input type="text" class="form-controls" name="username">
-					</div>
-                    <div class="form-wrappers">
-						<label>Username</label>
-						<input type="text" class="form-controls" name="username">
-					</div>
-					<div class="form-wrappers">
-						<label>Password</label>
-						<input type="password" class="form-controls" name="password">
-					</div>
+                    {% for field in form %}
+                        <p>
+
+                                {{ field.label_tag }}<br>
+                                {{ field }}
+                            {% if field.help_text %}
+                            <small style="form-controls">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <p style="form-controls">{{ error }}</p>
+                            {% endfor %}
+                        </p>
+                    {% endfor %}
                     <button class="buttonl" value="login" type="submit">Sign Up</button>
-                    <div class="col-12">
+				</form>
+                <div class="col-12">
                     <div class="form-wrappers">
                             <label for="">Already registered<b>?</b></label>
-                            <button class="button"  style="color:black">Log In</button>
+                            <a href="/login"><button class="button"  style="color:black">Log In</button></a>
                     </div>
                 </div>
-				</form>
 			</div>
         </div>
 

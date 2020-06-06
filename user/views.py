@@ -27,6 +27,9 @@ def login_form(request):
             # Return an 'invalid login' error message.
             messages.warning(request, "Login Error, Incorrect Username Or Password!!")
             return HttpResponseRedirect('/login')
+    #return an invalid login error messae
+
+
     category = Category.objects.all()
     context = {
         'category': category
@@ -37,17 +40,20 @@ def signup_form(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
+            form.save() #completed signup
             username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username,password=password)
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
             login(request, user)
             return HttpResponseRedirect('/')
+        else:
+            messages.warning(request, form.errors)
+            return HttpResponseRedirect('/signup')
     form = SignUpForm
     category = Category.objects.all()
     context = {
-        'category':category,
-        'form':form
+        'category': category,
+        'form': form
     }
     return render(request, 'signup_form.html',context)
 
