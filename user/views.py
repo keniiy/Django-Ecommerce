@@ -45,6 +45,13 @@ def signup_form(request):
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             login(request, user)
+            #create data in profile table for user
+            current_user = request.user
+            data = UserProfile()
+            data.user_id = current_user.id
+            data.image = "images/users/user.png"
+            data.save()
+            messages.success(request, 'Your account has been created!')
             return HttpResponseRedirect('/')
         else:
             messages.warning(request, form.errors)
