@@ -53,14 +53,14 @@ def addtoshopcart(request,id):
 
 def shopcart(request,):
     category = Category.objects.all()
-    current_user = request.user #acess user session information
+    current_user = request.user #access user session information
     shopcart = ShopCart.objects.filter(user=current_user.id)
     total = 0
     for rs in shopcart:
         total += rs.product.price * rs.quantity
     context = {
-        'category': category,
         'shopcart': shopcart,
+        'category': category,
         'total': total,
     }
     return render(request, 'shopcart.html', context)
@@ -70,3 +70,18 @@ def deletefromcart(request,id):
     ShopCart.objects.filter(id=id).delete()
     messages.success(request, "Items as as been sucessfully deleted from shopcart")
     return HttpResponseRedirect("/shopcart")
+
+
+def orderproduct(request):
+    category = Category.objects.all()
+    current_user = request.user  # acess user session information
+    shopcart = ShopCart.objects.filter(user=current_user.id)
+    total = 0
+    for rs in shopcart:
+        total += rs.product.price * rs.quantity
+    context = {
+        'shopcart': shopcart,
+        'category': category,
+        'total': total,
+    }
+    return render(request, 'order_form.html', context)
