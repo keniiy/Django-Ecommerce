@@ -1,13 +1,19 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.utils.crypto import get_random_string
 from order.models import ShopCart, ShopCartForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
-from product.models import Category
+from product.models import Category, Product
 
 
 # Create your views here.
+from user.models import UserProfile
+from order.models import OrderForm, Order, OrderProduct
+
+
+
 def index(request):
     return HttpResponse("order page")
 
@@ -54,7 +60,7 @@ def addtoshopcart(request,id):
 def shopcart(request,):
     category = Category.objects.all()
     current_user = request.user #access user session information
-    shopcart = ShopCart.objects.filter(user=current_user.id)
+    shopcart = ShopCart.objects.filter(user_id=current_user.id)
     total = 0
     for rs in shopcart:
         total += rs.product.price * rs.quantity
@@ -74,14 +80,61 @@ def deletefromcart(request,id):
 
 def orderproduct(request):
     category = Category.objects.all()
-    current_user = request.user  # acess user session information
-    shopcart = ShopCart.objects.filter(user=current_user.id)
+    current_user = request.user  # access user session information
+    shopcart = ShopCart.objects.filter(user_id=current_user.id)
     total = 0
     for rs in shopcart:
         total += rs.product.price * rs.quantity
+
+    if request.method == 'POST': #if there is a post
+        form = OrderForm(request.POST)
+        #return HttpResponse(request.POST.Items())
+        if form.is_valid():
+            # send credit information to bank and get result if bank return payment information
+            data = Order()
+            data.first_name = form.cleaned_data['first_name']
+            data.last_name = form.cleaned_data['last_name']
+            data.address = form.cleaned_data['address']
+            data.city = form.cleaned_data['city']
+            data.phone = form.cleaned_data['phone']
+            data.country = form.cleaned_data['country']
+            data.user_id = current_user.id
+            data.total = total
+            data.ip = request.META.get('REMOTE_ADDR')
+            ordercode = get_random_string(5).upper() #random code
+            data.code = ordercode
+            data.save()
+
+            #Then we move Shopcart items to order Products items
+            shopcart = ShopCart.objects.filter(user_id=current_user.id)
+            for rs in shopcart:
+                detail = OrderProduct()
+                detail.order_id = data.id #Order
+                detail.product_id = rs.product_id
+                detail.user_id = current_user.id
+                detail.quantity = rs.quantity
+                detail.price = rs.product.price
+                detail.amount = rs.amount
+                detail.save()
+                # Remove quantity  of sold product from amount of product
+                product = Product.objects.get(id=rs.product_id)
+                product.amount -= rs.quantity
+                product.save()
+            # then we clear and delete shop cart
+            ShopCart.objects.filter(user_id=current_user.id).delete()
+            request.session['cart_items'] = 0
+            messages.success(request, "Your Order has been completed. Thank You")
+            return render(request, 'order_completed.html', {'ordercode': ordercode, 'category': category})
+        else:
+            messages.warning(request, form.errors)
+            return HttpResponseRedirect("/order/orderproduct")
+    form = Order()
+    profile = UserProfile.objects.get(user_id=current_user.id)
     context = {
         'shopcart': shopcart,
         'category': category,
         'total': total,
+        'form': form,
+        'profile': profile,
     }
     return render(request, 'order_form.html', context)
