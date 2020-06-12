@@ -1,12 +1,15 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
 from product.models import Category
 from user.models import UserProfile
 from user.forms import SignUpForm
+
+from user.forms import ProfileUpdateForm, UserUpdateForm
+
 
 @login_required(login_url='/login') # Check login
 def index(request):
@@ -75,3 +78,24 @@ def signup_form(request):
 def logout_func(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+@login_required(login_url='/login') # Check login
+def user_update(request):
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance=request.user) # request.user data
+        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.userprofile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save() # completed signup
+            profile_form.save()
+            messages.success(request, 'Your account has been updated!')
+            return HttpResponseRedirect('/user')
+    else:
+        category = Category.objects.all()
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user.userprofile)
+        context = {
+            'category': category,
+            'user_form': user_form,
+            'profile_form': profile_form
+        }
+        return render(request, 'user_update.html', context)
