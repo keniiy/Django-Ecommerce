@@ -88,19 +88,19 @@
                             <li>
                                     <a href="#">Blog</a>
                             </li>
-
-                            <li><a href="#">Help</a>
+                            {% if user.id is not none %}
+                            <li><a>My Account</a>
                                 <ul class="single-dropdown">
-                                    <li><a href="about-us.html">about us</a></li>
-                                    <li><a href="howto.html">How to pay on Over Dose?</a></li>
-                                    <li><a href="coupon.html">How to use a Coupon?</a></li>
-                                    <li><a href="register.html">Return and Refund</a></li>
-                                    <li><a href="cart.html">Delivery Time and Fees</a></li>
+                                    <li><a href="/user">Account</a></li>
+                                    <li><a href="/user/wishlist">My Wishlist</a></li>
+                                    <li><a href="/user/orders">My Orders</a></li>
+                                    <li><a href="/user/comments">My Comments</a></li>
+                                    <li><a href="/logout/">Logout</a></li>
                                     <li><a href="checkout.html">checkout</a></li>
                                     <li><a href="contact.html">contact</a></li>
                                 </ul>
                             </li>
-                            
+                            {% endif %}
                         </ul>
                     </nav>
                 </div>
@@ -130,7 +130,7 @@
                         </div>
                         <div class="header-cart cart-res">
 
-                            <img src="{{ request.session.userimage }}" height="40px" width="40px" overflow="hidden" style="border-radius: 30px">
+                            <img src="{{ profile.image.url }}" height="40px" width="40px" overflow="hidden" style="border-radius: 30px">
 
                     </div>
                     {% else %}
@@ -144,7 +144,7 @@
                     <div class="header-cart cart-res">
                         <a class="icon-cart" href="/shopcart/">
                             <i class="ti-shopping-cart"></i>
-                            <span class="shop-count pink">{{quantity}}</span>
+                            <span class="shop-count pink">2</span>
                         </a>
                     </div>
                 </div>

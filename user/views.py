@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
@@ -7,9 +8,16 @@ from product.models import Category
 from user.models import UserProfile
 from user.forms import SignUpForm
 
-
+@login_required(login_url='/login') # Check login
 def index(request):
-    return HttpResponse("User App")
+    category = Category.objects.all()
+    current_user = request.user # access user session information
+    profile = UserProfile.objects.get(user_id=current_user.id)
+    context = {
+        'category': category,
+        'profile': profile
+    }
+    return render(request, 'user_profile.html', context)
 
 def login_form(request):
     if request.method == 'POST':

@@ -10,6 +10,7 @@ from django.db.models import Q
 import json
 from product.models import Comment
 # Create your views here.
+from user.models import UserProfile
 
 
 def index(request):
@@ -28,7 +29,10 @@ def index(request):
     products_kids = list(Product.objects.filter(kids_home=True).order_by('id'))[0:10]
 
     page = "home"
+    current_user = request.user  # access user session information
+    profile = UserProfile.objects.get(user_id=current_user.id)
     context = {
+        'profile': profile,
         'setting': setting,
         'page': page,
         'products_slider': products_slider,
