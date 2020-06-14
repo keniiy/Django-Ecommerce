@@ -8,10 +8,10 @@ from django.utils.safestring import mark_safe
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(blank=True, max_length=20)
-    address = models.CharField(blank=True,max_length=150)
-    city = models.CharField(blank=True,max_length=20)
-    country = models.CharField(blank=True,max_length=20)
-    image = models.ImageField(blank=True,upload_to='images/users/')
+    address = models.CharField(blank=True, max_length=150)
+    city = models.CharField(blank=True, max_length=20)
+    country = models.CharField(blank=True, max_length=20)
+    image = models.ImageField(blank=True, upload_to='images/users/')
 
     def __str__(self):
         return self.user.username

@@ -9,8 +9,6 @@ from home.forms import SearchForm
 from django.db.models import Q
 import json
 from product.models import Comment
-# Create your views here.
-from user.models import UserProfile
 
 
 def index(request):
@@ -29,10 +27,7 @@ def index(request):
     products_kids = list(Product.objects.filter(kids_home=True).order_by('id'))[0:10]
 
     page = "home"
-    current_user = request.user  # access user session information
-    profile = UserProfile.objects.get(user_id=current_user.id)
     context = {
-        'profile': profile,
         'setting': setting,
         'page': page,
         'products_slider': products_slider,
@@ -49,7 +44,7 @@ def index(request):
         'category': category
         
     }
-    return render(request, 'homepage.html',context)
+    return render(request, 'homepage.html', context)
 
 def aboutus(request):
     setting = Setting.objects.get(pk=1)
@@ -72,7 +67,7 @@ def contactus(request):
             data.telephone = form.cleaned_data['telephone']
             data.message = form.cleaned_data['message']
             data.ip_address = request.META['REMOTE_ADDR']
-            data.save()#save data to table 
+            data.save() # save data to table
             messages.success(request, "Your message has been sent. Thank You for your Contacting us we would get back to you shortly")
             return HttpResponseRedirect('/contact')
     setting = Setting.objects.get(pk=1)
@@ -118,7 +113,7 @@ def product_detail(request,id,slug):
     category = Category.objects.all()
     product = Product.objects.get(pk=id)
     images = Images.objects.filter(product_id=id)
-    comments = Comment.objects.filter(product_id=id,status='True')
+    comments = Comment.objects.filter(product_id=id, status='True')
     context = {
         'product': product,
         'category': category,
