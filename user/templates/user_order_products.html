@@ -377,7 +377,7 @@
                 </div>
             </div>
         </div>
-        <!-- body Start -->
+        <!-- body end -->
         <div class="cart-main-area pt-95 pb-100">
             <div class="container">
                 <div class="row">
@@ -390,40 +390,54 @@
                     <div class="col-md-9">
                         <div class="billing-details">
                             <div class="section-title">
-                                <h3 class="title">Orders</h3>
+                                <h3 class="title">Order Product</h3>
+                            </div>
+
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                                <div class="table-content table-responsive">
+                                                    <table>
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Image</th>
+                                                                <th>Product Name</th>
+                                                                <th>Price</th>
+                                                                <th>Quantity</th>
+                                                                <th>Amount</th>
+                                                                <th>Status</th>
+                                                                <th>Date</th>
+                                                                <th>Detail</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                        {% for rs in order_product %}
+                                                            <tr>
+                                                                <td class="product-thumbnail">
+                                                                    <a href="/product/{{ rs.product.id }}/{{ rs.product.slug }}"><img src="{{ rs.product.image.url }}" width="50px" height="70px" overflow="hidden" alt=""></a>
+                                                                </td>
+                                                                <td class="product-name"><a href="/product/{{ rs.product.id }}/{{ rs.product.slug }}">{{ rs.product }}</a></td>
+                                                                <td class="product-price-cart"><span class="amount">₦{{ rs.price }}</span></td>
+                                                                <td class="product-quantity">
+                                                                    {{ rs.quantity }}
+                                                                </td>
+                                                                <td class="product-subtotal">₦{{ rs.amount }}</td>
+                                                                <td class="product-name">{{ rs.status }}</td>
+                                                                <td class="product-name">{{ rs.create_at }}</td>
+                                                                <td class="product-subtotal"><a class="button" style="color:black" href="/user/order_product_detail/{{ rs.id }}/{{ rs.order.id }}">Detail</a></td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                        </div>
+                                        </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-						<div class="order-summary clearfix">
-							<div class="section-title">
-								<h3 class="title">Order List</h3>
-							</div>
-							<table class="shopping-cart-table table">
-									<tr>
-										<th class="text-left">Id</th>
-										<th class="text-left">First Name</th>
-										<th class="text-left">Last Name</th>
-										<th class="text-left">Total</th>
-                                        <th class="text-left">Status</th>
-                                        <th class="text-left">Date</th>
-                                        <th class="text-left">Detail</th>
-									</tr>
-                                    {% for rs in orders %}
-									    <tr>
-										<td class="text-left">{{ rs.id }}</td>
-										<td class="text-left">{{ rs.first_name }}</a></td>
-										<td class="text-left">{{ rs.last_name }}</td>
-										<td class="text-left">{{ rs.total }}</td>
-                                        <td class="text-left">{{ rs.status }}</td>
-                                        <td class="text-left">{{ rs.create_at }}</td>
-                                        <td class="text-left"><a class="button" style="color:black" href="/user/orderdetail/{{ rs.id }}">Detail</a></td>
-									</tr>
-                                    {% endfor %}
-							</table>
-						</div>
-
-					</div>
-                    </div>
+                     </div>
                     </div>
                 </div>
             </div>

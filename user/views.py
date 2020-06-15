@@ -151,10 +151,22 @@ def user_orderdetail(request,id):
 def user_order_product(request):
     category = Category.objects.all()
     current_user = request.user
-    order_product = Order.objects.get(user_id=current_user.id
-
+    order_product = OrderProduct.objects.filter(user_id=current_user.id)
     context = {
         'category': category,
         'order_product': order_product
+    }
+    return render(request, 'user_order_products.html', context)
+
+
+def user_order_product_detail(request,id,oid):
+    category = Category.objects.all()
+    current_user = request.user
+    order = Order.objects.get(user_id=current_user.id, id=oid)
+    orderitems = OrderProduct.objects.filter(id=id, user_id=current_user.id)
+    context = {
+        'category': category,
+        'order': order,
+        'orderitems': orderitems
     }
     return render(request, 'user_order_detail.html', context)
