@@ -51,7 +51,7 @@ def aboutus(request):
     context = {
         'setting': setting
     }
-    return render(request, 'about.html',context)
+    return render(request, 'about.html', context)
 
 def contactus(request):
     # if this is a POST request we need to process the form data

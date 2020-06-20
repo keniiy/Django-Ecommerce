@@ -534,15 +534,15 @@
                         <div class="sidebar-active product-details-content">
                             <h3>{{ product.title }}</h3>
                             <div class="rating-number">
-                                <div class="quick-view-rating">
-                                    <i class="pe-7s-star red-star"></i>
-                                    <i class="pe-7s-star red-star"></i>
-                                    <i class="pe-7s-star"></i>
-                                    <i class="pe-7s-star"></i>
-                                    <i class="pe-7s-star"></i>
+                                <div class="product-rating-4">
+                                     <i class="icofont icofont-star {% if product.avaregereview >= 1 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if product.avaregereview >= 2 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if product.avaregereview >= 3 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if product.avaregereview >= 4 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if product.avaregereview >= 5 %}yellow{% endif %}"></i>
                                 </div>
                                 <div class="quick-view-number">
-                                    <span>2 Ratting (S)</span>
+                                    <span> {{ product.avaregereview |stringformat:".2f"}} Ratting (S) | {{ product.countreview }} Reviews(s)</span>
                                 </div>
                             </div>
                             <div class="details-price">
@@ -621,7 +621,6 @@
                                                 <h5><a href="#">{{ rs.user.first_name }}</a></h5>
                                                 <h5><span>{{ rs.subject }}</span></h5>
                                                 <span>{{ rs.create_at }}</span>
-
                                                 <div class="product-rating-4">
                                                     <i class="icofont icofont-star {% if rs.rate >= 1 %}yellow{% endif %}"></i>
                                                     <i class="icofont icofont-star {% if rs.rate >= 2 %}yellow{% endif %}"></i>
@@ -666,15 +665,15 @@
                                             <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
                                             <div>
                                               <form action="">
-                                                <input class="star star-5" id="star-5" type="radio" name="rate" value="1"/>
+                                                <input class="star star-5" id="star-5" type="radio" name="rate" value="5"/>
                                                 <label class="star star-5" for="star-5"></label>
-                                                <input class="star star-4" id="star-4" type="radio" name="rate" value="2"/>
+                                                <input class="star star-4" id="star-4" type="radio" name="rate" value="4"/>
                                                 <label class="star star-4" for="star-4"></label>
                                                 <input class="star star-3" id="star-3" type="radio" name="rate" value="3"/>
                                                 <label class="star star-3" for="star-3"></label>
-                                                <input class="star star-2" id="star-2" type="radio" name="rate" value="4"/>
+                                                <input class="star star-2" id="star-2" type="radio" name="rate" value="2"/>
                                                 <label class="star star-2" for="star-2"></label>
-                                                <input class="star star-1" id="star-1" type="radio" name="rate" value="5"/>
+                                                <input class="star star-1" id="star-1" type="radio" name="rate" value="1"/>
                                                 <label class="star star-1" for="star-1"></label>
                                               </form>
                                             </div>

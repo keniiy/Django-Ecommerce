@@ -9,7 +9,6 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{% static '' %}assets/img/favicon.jpg">
 
     <!-- all css here -->
     <link rel="stylesheet" href="{% static '' %}assets/css/bootstrap.min.css">
@@ -19,6 +18,7 @@
     <link rel="stylesheet" href="{% static '' %}assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="{% static '' %}assets/css/themify-icons.css">
     <link rel="stylesheet" href="{% static '' %}assets/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="{% static '' %}assets/css/icofont.css">
     <link rel="stylesheet" href="{% static '' %}assets/css/meanmenu.min.css">
     <link rel="stylesheet" href="{% static '' %}assets/css/bundle.css">
     <link rel="stylesheet" href="{% static '' %}assets/css/style.css">
@@ -265,6 +265,21 @@
                             <div class="product-content">
                                 <h4><a href="product-details.html">{{ rs.title }}</a></h4>
                                 <span>₦{{ rs.price }}</span>
+                                <span>
+                                <div class="rating-number">
+                                <div class="product-rating-4">
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 1 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 2 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 3 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 4 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 5 %}yellow{% endif %}"></i>
+                                </div>
+                                <div class="quick-view-number">
+                                    <span> {{ rs.avaregereview |stringformat:".2f"}} Ratting (S)</span>
+                                    <span> {{ rs.countreview }} Reviews(s)</span>
+                                </div>
+                            </div>
+                                </span>
                             </div>
                         </div>
                         {% endfor %}
@@ -328,6 +343,21 @@
                                         <div class="product-content">
                                             <h4><a href="/product/{{ rs.id }}/{{ rs.slug }}">{{ rs.title }}</a></h4>
                                             <span>₦{{ rs.price }}</span>
+                                            <span>
+                                <div class="rating-number">
+                                <div class="product-rating-4">
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 1 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 2 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 3 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 4 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 5 %}yellow{% endif %}"></i>
+                                </div>
+                                <div class="quick-view-number">
+                                    <span> {{ rs.avaregereview |stringformat:".2f"}} Ratting (S)</span>
+                                    <span> {{ rs.countreview }} Reviews(s)</span>
+                                </div>
+                            </div>
+                                </span>
                                         </div>
                                     </div>
                                 </div>
@@ -361,6 +391,21 @@
                                         <div class="product-content">
                                             <h4><a href="/product/{{ rs.id }}/{{ rs.slug }}">{{ rs.title }}</a></h4>
                                             <span>₦{{ rs.price }}</span>
+                                            <span>
+                                <div class="rating-number">
+                                <div class="product-rating-4">
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 1 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 2 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 3 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 4 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 5 %}yellow{% endif %}"></i>
+                                </div>
+                                <div class="quick-view-number">
+                                    <span> {{ rs.avaregereview |stringformat:".2f"}} Ratting (S)</span>
+                                    <span> {{ rs.countreview }} Reviews(s)</span>
+                                </div>
+                            </div>
+                                </span>
                                         </div>
                                     </div>
                                 </div>
@@ -395,6 +440,21 @@
                                         <div class="product-content">
                                             <h4><a href="/product/{{ rs.id }}/{{ rs.slug }}">{{ rs.title }}</a></h4>
                                             <span>₦{{ rs.price }}</span>
+                                            <span>
+                                <div class="rating-number">
+                                <div class="product-rating-4">
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 1 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 2 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 3 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 4 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 5 %}yellow{% endif %}"></i>
+                                </div>
+                                <div class="quick-view-number">
+                                    <span> {{ rs.avaregereview |stringformat:".2f"}} Ratting (S)</span>
+                                    <span> {{ rs.countreview }} Reviews(s)</span>
+                                </div>
+                            </div>
+                                </span>
                                         </div>
                                     </div>
                                 </div>
@@ -429,6 +489,21 @@
                                         <div class="product-content">
                                             <h4><a href="/product/{{ rs.id }}/{{ rs.slug }}">{{ rs.title }}</a></h4>
                                             <span>₦{{ rs.price }}</span>
+                                            <span>
+                                <div class="rating-number">
+                                <div class="product-rating-4">
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 1 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 2 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 3 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 4 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 5 %}yellow{% endif %}"></i>
+                                </div>
+                                <div class="quick-view-number">
+                                    <span> {{ rs.avaregereview |stringformat:".2f"}} Ratting (S)</span>
+                                    <span> {{ rs.countreview }} Reviews(s)</span>
+                                </div>
+                            </div>
+                                </span>
                                         </div>
                                     </div>
                                 </div>
@@ -464,6 +539,21 @@
                                         <div class="product-content">
                                             <h4><a href="/product/{{ rs.id }}/{{ rs.slug }}">{{ rs.title }}</a></h4>
                                             <span>₦{{ rs.price }}</span>
+                                            <span>
+                                <div class="rating-number">
+                                <div class="product-rating-4">
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 1 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 2 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 3 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 4 %}yellow{% endif %}"></i>
+                                     <i class="icofont icofont-star {% if rs.avaregereview >= 5 %}yellow{% endif %}"></i>
+                                </div>
+                                <div class="quick-view-number">
+                                    <span> {{ rs.avaregereview |stringformat:".2f"}} Ratting (S)</span>
+                                    <span> {{ rs.countreview }} Reviews(s)</span>
+                                </div>
+                            </div>
+                                </span>
                                         </div>
                                     </div>
                                 </div>

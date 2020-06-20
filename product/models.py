@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Avg, Count
 from django.utils.safestring import mark_safe
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
@@ -71,7 +72,7 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
-    #methos to create a fake database table field in read only mode
+    # methods to create a fake database table field in read only mode
     def image_tag(self):
         return mark_safe('<image src="{}" height="100" width="100"/>'.format(self.image.url))
     image_tag.short_description = "Image"
@@ -79,6 +80,20 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('category_detail', kwargs={'slug': self.slug})
+
+    def avaregereview(self):
+        reviews = Comment.objects.filter(product=self, status='True').aggregate(average=Avg('rate'))
+        avg = 0
+        if reviews["average"] is not None:
+            avg = float(reviews["average"])
+        return avg
+
+    def countreview(self):
+        reviews = Comment.objects.filter(product=self, status='True').aggregate(count=Count('id'))
+        cnt = 0
+        if reviews["count"] is not None:
+            cnt = int(reviews["count"])
+        return cnt
 
 class Images(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

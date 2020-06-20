@@ -5,12 +5,11 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
-from product.models import Category
+from product.models import Category, Comment
 from user.models import UserProfile
 from user.forms import SignUpForm
 from user.forms import ProfileUpdateForm, UserUpdateForm
 from order.models import Order, OrderProduct
-
 
 
 @login_required(login_url='/login') # Check login
@@ -170,3 +169,24 @@ def user_order_product_detail(request,id,oid):
         'orderitems': orderitems
     }
     return render(request, 'user_order_detail.html', context)
+
+@login_required(login_url='/login')
+def user_comments(request):
+    category = Category.objects.all()
+    current_user = request.user
+    comments = Comment.objects.filter(user_id=current_user.id)
+    current_user = request.user  # access user session information
+    profile = UserProfile.objects.get(user_id=current_user.id)
+    context = {
+        'category': category,
+        'comments': comments,
+        'profile': profile
+    }
+    return render(request, 'user_comments.html', context)
+
+@login_required(login_url='/login')
+def user_deletecomment(request,id):
+    current_user = request.user
+    Comment.objects.filter(id=id, user_id=current_user.id).delete()
+    messages.success(request, 'Your Comment Has Been Deleted..')
+    return HttpResponseRedirect('/user/comments')

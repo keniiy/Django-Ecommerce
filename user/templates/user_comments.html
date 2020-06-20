@@ -377,7 +377,7 @@
                 </div>
             </div>
         </div>
-        <!-- body end -->
+        <!-- body Start -->
         <div class="cart-main-area pt-95 pb-100">
             <div class="container">
                 <div class="row">
@@ -390,54 +390,51 @@
                     <div class="col-md-9">
                         <div class="billing-details">
                             <div class="section-title">
-                                <h3 class="title">Order Product</h3>
+                                <h3 class="title">Comments</h3>
                             </div>
-
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-                                                <div class="table-content table-responsive">
-                                                    <table>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Image</th>
-                                                                <th>Product Name</th>
-                                                                <th>Price</th>
-                                                                <th>Quantity</th>
-                                                                <th>Amount</th>
-                                                                <th>Status</th>
-                                                                <th>Date</th>
-                                                                <th>Detail</th>
-                                                            </tr>
-                                                        </thead>
-
-                                                        <tbody>
-                                                        {% for rs in order_product %}
-                                                            <tr>
-                                                                <td class="product-thumbnail">
-                                                                    <a href="/product/{{ rs.product.id }}/{{ rs.product.slug }}"><img src="{{ rs.product.image.url }}" width="50px" height="70px" overflow="hidden" alt=""></a>
-                                                                </td>
-                                                                <td class="product-name"><a href="/product/{{ rs.product.id }}/{{ rs.product.slug }}">{{ rs.product }}</a></td>
-                                                                <td class="product-price-cart"><span class="amount">₦{{ rs.price }}</span></td>
-                                                                <td class="product-quantity">
-                                                                    {{ rs.quantity }}
-                                                                </td>
-                                                                <td class="product-subtotal">₦{{ rs.amount }}</td>
-                                                                <td class="product-name">{{ rs.status }}</td>
-                                                                <td class="product-name">{{ rs.create_at }}</td>
-                                                                <td class="product-subtotal"><a class="button" style="color:black" href="/user/order_product_detail/{{ rs.id }}/{{ rs.order.id }}">Detail</a></td>
-                                                            </tr>
-                                                        {% endfor %}
-                                                        </tbody>
-                                                    </table>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="blog-replay-wrapper">
+                            <h4 class="blog-details-title2">REVIEW ON PRODUCT</h4>
+                              {% for rs in comments %}
+                                    <div class="single-blog-replay">
+                                    <div class="replay-img">
+                                        <a href="#"><img src="{{ profile.image.url }}" height="80px" width="80px" overflow="hidden" style="border-radius: 50px"></a>
+                                    </div>
+                                    <div class="replay-info-wrapper">
+                                        <div class="replay-info">
+                                            <div class="replay-name-date">
+                                                <h5><a href="#">{{ rs.user.first_name }}</a></h5>
+                                                <h5><span>{{ rs.subject }}</span></h5>
+                                                <div>
+                                                    <h6>{{ rs.comment }}</h6>
                                                 </div>
-                                        </div>
-
+                                                <span>{{ rs.create_at }}</span>
+                                                  <div class="rating-number">
+                                                    <div class="quick-view-rating">
+                                                        <i class="pe-7s-star red-star"></i>
+                                                        <i class="pe-7s-star red-star"></i>
+                                                        <i class="pe-7s-star"></i>
+                                                        <i class="pe-7s-star"></i>
+                                                        <i class="pe-7s-star"></i>
+                                                    </div>
+                                                    <div class="quick-view-number">
+                                                        <span>{{ rs.rate }} Ratting</span>
+                                                    </div>
+                                                </div>
+                                                <div class="rating-number">
+                                                    <span><button class="button" style="color:black; max-height: 50px;"><a href="/user/deletecomment/{{ rs.id }}" onclick="return confirm('Are You Sure? Your Comment Would Be Deleted..')">Delete</a></button></span>
+                                                    </div>
+                                                <hr>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                              {% endfor %}
+
                         </div>
-                     </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>
