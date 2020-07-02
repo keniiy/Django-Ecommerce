@@ -86,12 +86,12 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ecommercedb',
-        'USER': 'postgres',
-        'PASSWORD': '1234567890',
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'overdosedb',
+        'USER': 'root',
+        'PASSWORD': '!PETERsolomon123',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 

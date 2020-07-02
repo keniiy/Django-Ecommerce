@@ -414,9 +414,15 @@
                                                         {% for rs in order_product %}
                                                             <tr>
                                                                 <td class="product-thumbnail">
-                                                                    <a href="/product/{{ rs.product.id }}/{{ rs.product.slug }}"><img src="{{ rs.product.image.url }}" width="50px" height="70px" overflow="hidden" alt=""></a>
+                                                                    <a href="/product/{{ rs.product.id }}/{{ rs.product.slug }}">
+                                                                         {% if rs.variant.image_id > 0 %}
+                                                                        <img src="{{rs.variant.image }}" width="50px" height="70px" overflow="hidden" alt="">
+                                                                        {% else %}
+                                                                        <img src="{{rs.product.image.url}}" alt="" style="height: 80px">
+                                                                    {% endif %}
+                                                                    </a>
                                                                 </td>
-                                                                <td class="product-name"><a href="/product/{{ rs.product.id }}/{{ rs.product.slug }}">{{ rs.product }}</a></td>
+                                                                <td class="product-name"><a href="/product/{{ rs.product.id }}/{{ rs.product.slug }}">{{ rs.product.title}} {{ rs.variant.size }}   {{ rs.variant.color }}</a></td>
                                                                 <td class="product-price-cart"><span class="amount">₦{{ rs.price }}</span></td>
                                                                 <td class="product-quantity">
                                                                     {{ rs.quantity }}

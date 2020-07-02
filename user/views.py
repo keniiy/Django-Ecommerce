@@ -10,6 +10,7 @@ from user.models import UserProfile
 from user.forms import SignUpForm
 from user.forms import ProfileUpdateForm, UserUpdateForm
 from order.models import Order, OrderProduct
+from home.models import FAQ
 
 
 @login_required(login_url='/login') # Check login
@@ -190,3 +191,12 @@ def user_deletecomment(request,id):
     Comment.objects.filter(id=id, user_id=current_user.id).delete()
     messages.success(request, 'Your Comment Has Been Deleted..')
     return HttpResponseRedirect('/user/comments')
+
+def faq(request):
+    category = Category.objects.all()
+    faq = FAQ.objects.all()
+    context = {
+        'category': category,
+        'faq': faq
+    }
+    return render(request, 'faq.html', context)

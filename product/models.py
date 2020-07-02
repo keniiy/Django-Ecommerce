@@ -49,18 +49,25 @@ class Product(models.Model):
         ('True', 'True'),
         ('False', 'False'),
     )
-    category = models.ForeignKey(Category, on_delete=models.CASCADE,default='1')
+    VARIANTS = (
+        ('None', 'None'),
+        ('Size', 'Size'),
+        ('Color', 'Color'),
+        ('Size-Color', 'Size-Color'),
+    )
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default='1')
     title = models.CharField(max_length=150)
     keywords = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     image = models.ImageField(upload_to='images/')
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=12, decimal_places=2,default=0)
     amount = models.IntegerField()
     minamount = models.IntegerField()
-    short_description = models.TextField(max_length=100,default=True)
+    variant = models.CharField(max_length=10, choices=VARIANTS, default='None')
+    short_description = models.TextField(max_length=100, default=True)
     detail = RichTextUploadingField()
     slug = models.SlugField(null=False, unique=True)
-    status = models.CharField(max_length=10,choices=STATUS)
+    status = models.CharField(max_length=10, choices=STATUS)
     new_arrival = models.BooleanField(default=True)
     men_home = models.BooleanField(default=True)
     women_home = models.BooleanField(default=True)
@@ -111,11 +118,11 @@ class Comment(models.Model):
     )
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    subject = models.CharField(max_length=50,blank=True)
-    comment = models.CharField(max_length=250,blank=True)
+    subject = models.CharField(max_length=50, blank=True)
+    comment = models.CharField(max_length=250, blank=True)
     rate = models.IntegerField(default=1)
-    ip = models.CharField(max_length=250,blank=True)
-    status = models.CharField(max_length=10,choices=STATUS, default='New')
+    ip = models.CharField(max_length=250, blank=True)
+    status = models.CharField(max_length=10, choices=STATUS, default='New')
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
 
@@ -126,3 +133,47 @@ class CommentForm(ModelForm):
     class Meta:
         model = Comment
         fields = ['subject', 'comment', 'rate']
+
+class Color(models.Model):
+    name = models.CharField(max_length=20)
+    code = models.CharField(max_length=10, blank=True,null=True)
+    def __str__(self):
+        return self.name
+    def color_tag(self):
+        if self.code is not None:
+            return mark_safe('<p style="background-color:{}">Color </p>'.format(self.code))
+        else:
+            return ""
+
+class Size(models.Model):
+    name = models.CharField(max_length=20)
+    code = models.CharField(max_length=10, blank=True,null=True)
+    def __str__(self):
+        return self.name
+
+class Variants(models.Model):
+    title = models.CharField(max_length=100, blank=True,null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    color = models.ForeignKey(Color, on_delete=models.CASCADE,blank=True,null=True)
+    size = models.ForeignKey(Size, on_delete=models.CASCADE,blank=True,null=True)
+    image_id = models.IntegerField(blank=True,null=True,default=0)
+    quantity = models.IntegerField(default=1)
+    price = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+
+    def __str__(self):
+        return self.title
+
+    def image(self):
+        img = Images.objects.get(id=self.image_id)
+        if img.id is not None:
+             varimage=img.image.url
+        else:
+            varimage=""
+        return varimage
+
+    def image_tag(self):
+        img = Images.objects.get(id=self.image_id)
+        if img.id is not None:
+             return mark_safe('<img src="{}" height="50"/>'.format(img.image.url))
+        else:
+            return ""

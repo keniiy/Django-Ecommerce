@@ -53,11 +53,11 @@
                 <div class="main-menu menu-hover">
                     <nav>
 
-                    {% load mptt_tags %}
+
                         <ul>
                             <li style="background-color:white;"><a>CATEGORIES</a></li>
                             <ul>
-
+                                {% load mptt_tags %}
                             {% recursetree category %}
                             <li><a href="/category/{{ node.id }}/{{ node.slug }}">{{node.title}}</a>
                                 <div class="mega-menu-dropdown mega-dropdown-width">
@@ -68,10 +68,9 @@
                                             <div class="mega-banner-img-2">
                                                   <a><img src="{{node.image.url}}" height="400px" width="500px" overflow="hidden" alt="" alt=""></a>
                                             </div>
-                                        {% endif %}                                        
+                                        {% endif %}
                                         </ul>
                                    </div>
-                                
                             </li>
                             {% endrecursetree %}
 
@@ -144,7 +143,9 @@
                     <div class="header-cart cart-res">
                         <a class="icon-cart" href="/shopcart/">
                             <i class="ti-shopping-cart"></i>
-                            <span class="shop-count pink">2</span>
+                            {% load myapptags %}
+                            {% shopcartcount user.id as count %}
+                            <span class="shop-count pink">{{ count }}</span>
                         </a>
                     </div>
                 </div>
@@ -622,6 +623,7 @@
                                     <li><a href="register.html">Return and Refund</a></li>
                                     <li><a href="cart.html">Delivery Time and Fees</a></li>
                                     <li><a href="checkout.html">checkout</a></li>
+                                    <li><a href="/faq">Faq</a></li>
                                 </ul>
                             </div>
                         </div>

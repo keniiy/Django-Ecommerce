@@ -25,14 +25,6 @@
         <link rel="stylesheet" href="{% static '' %}assets/css/style.css">
         <link rel="stylesheet" href="{% static '' %}assets/css/responsive.css">
         <script src="{% static '' %}assets/js/vendor/modernizr-2.8.3.min.js"></script>
-
-
-           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
-    <!-- jQuery UI !-->
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-
-
         <!-- jQuery !-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
     <!-- jQuery UI !-->
@@ -532,14 +524,23 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-7 col-12">
                         <div class="product-details-6 pr-70 pro-stick product-details-6 pr-70 pro-stick">
-                             <div class="easyzoom easyzoom--overlay mb-30">
-                                <a href="{{ product.image.url }}" width="540px" height="500px" overflow="hidden" alt="">
-                                    <img src="{{ product.image.url }}" width="540px" height="500px" overflow="hidden" alt="">
+                            {% if variant.image_id > 0 %}
+                            <div class="easyzoom easyzoom--overlay mb-30">
+                                <a  href="{{ variant.image }}" alt="" width="540px" height="500px">
+                                    <img  src="{{ variant.image }}" width="540px" height="500px" overflow="hidden" alt="">
                                 </a>
                             </div>
+                            {% else %}
+                            <div class="easyzoom easyzoom--overlay mb-30">
+                                <a  href="{{ product.image.url }}" alt="" width="540px" height="500px">
+                                    <img  src="{{ product.image.url }}" width="540px" height="500px" overflow="hidden" alt="">
+                                </a>
+                            </div>
+                            {% endif %}
+
                             {% for rs in images %}
                             <div class="easyzoom easyzoom--overlay mb-30">
-                                    <a href="{{ rs.image.url }}" width="540px" height="500px" overflow="hidden" alt="">
+                                    <a href="{{ rs.image.url }}" width="540px" height="500px"overflow="hidden" alt="">
                                             <img src="{{ rs.image.url }}" width="540px" height="500px" overflow="hidden" alt="">
                                 </a>
                             </div>
@@ -591,18 +592,16 @@
 
                                 <div class="quick-view-select">
                              {% if product.variant == 'Size-Color' %}
-
                                 <div class="select-option-part">
                                     <div class="product-options" >
                                             <div class="size-option">
                                                 <form method="POST" id="post-form">
                                                     <input type="hidden" name="productid" id="productid" value="{{ product.id }}">
+                                                    <span class="text-uppercase">Size :</span>
                                                     {% csrf_token %}
-                                                    <label>Size*</label>
-                                                    <select class="select">
-                                                        <option value="">- Please Select -</option>
+                                                    <select name="size" id="size">
                                                         {% for rs in sizes %}
-                                                        <option {% if variant.size_id == rs.size_id %} selected {% endif %} value="{{ rs.size_id }}">{{ rs.size.name }}</option>
+                                                            <option {% if variant.size_id == rs.size_id %} selected {% endif %} value="{{ rs.size_id }}">{{ rs.size.name }}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </form>
@@ -613,8 +612,8 @@
                                           <!-- Product Color -->
                                         <div class="col-md-12" id="appendHere">
                                             <div class="row">
-                                                <label>Color*</label>
                                                 <input type="hidden" name="size" id="size" value="{{ size_id }}">
+                                                <label>Size*</label>
                                                 {% for rs in colors %}
                                                 <label class="layersMenu">
                                                 <input type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variantid" id="variantid" value="{{ rs.id }}" onchange="this.form.submit();">
@@ -624,6 +623,7 @@
                                                     {{ rs.price}}  {{ rs.color }}
                                                     </a>
                                                 </div>
+                                                </label>
                                                 {% endfor %}
                                             </div>
                                         </div>
@@ -636,21 +636,15 @@
                                             <div class="row">
                                                 <input type="hidden" name="size" id="size" value="{{ size_id }}">
                                                 <label>Size*</label>
-                                                <input type="hidden" name="productid" id="productid" value="{{ product.id }}">
-                                                    {% csrf_token %}
-                                                    <label>Size*</label>
-                                                    <select class="select">
-                                                        <option value="">- Please Select -</option>
-                                                        {% for rs in sizes %}
-                                                        <option {% if variant.size_id == rs.size_id %} selected {% endif %} value="{{ rs.size_id }}">{{ rs.size.name }}</option>
-                                                        {% endfor %}
-                                                    </select>
+                                                {% for rs in sizes %}
+                                                <label class="radio-inline">
+                                                    <input type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variantid" id="variantid" value="{{ rs.id }}" onchange="this.form.submit();">
+                                                        <a class="blog-btn btn-hover">{{ rs.size }}</a>
+                                                </label>
                                                 {% endfor %}
                                             </div>
                                         </div>
-                                        </div>
                                     </form>
-                                    <br><br>
 
                             {% elif product.variant == 'Color' %}
                                     <form method="post" action="?q=selectvariant" id="post-color">
@@ -661,8 +655,8 @@
                                                 {% for rs in colors %}
                                                 <label class="layersMenu">
                                                 <input type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variantid" id="variantid" value="{{ rs.id }}" onchange="this.form.submit();">
-                                                        <img src="{{ rs.image }}" style="height: 70px">
-                                                <div {% if variant.id == rs.id %} class="active" {% endif %}>
+                                                  <img src="{{ rs.image }}" style="height: 70px">
+                                                <div>
                                                     <a style="background-color:{{ rs.color.code }}; color: #D9D9D9; text-shadow: 1px 1px #000000; width: 90px">
                                                     {{ rs.price}}  {{ rs.color }}
                                                     </a>
@@ -674,14 +668,14 @@
                                     {% endif %}
 
 
-                            {% if  product.variant != 'None' %}
-                                 <form action="/order/addtoshopcart/{{ product.id }}" method="post"  id="addchart-form">
+                             {% if  product.variant != 'None'   %}
+                                <form action="/order/addtoshopcart/{{ product.id }}" method="post"  id="addchart-form">
                                     {% csrf_token %}
                                     <input type="hidden" name="variantid" id="variantid" value="{{ variant.id }}">
                                     <div class="product-details-cati-tag mt-35" id="SelectedProduct">
                                         <ul>
                                             <li class="categories-title">Availability :</li>
-                                            <li><a> {% if variant.quantity > 0  %} In Stock {% else %} Out of Stock {% endif %}</a></li>
+                                            <li><a> {% if variant.quantity > 0  %} <h5><b>In Stock</b></h5> {% else %} <h5><b>Out of Stock</b></h5> {% endif %}</a></li>
                                         </ul>
                                         <ul>
                                             <li class="categories-title"></li>
@@ -698,28 +692,21 @@
                                             <div>
                                                 <input class="input" type="number" value="1" min="1" max="{{ variant.quantity  }}" name="quantity" class="cart-plus-minus-box" >
                                             </div>
-                                            {% if variant.quantity < 1  %}
-                                                <div class="quickview-btn-cart">
-                                                    <a class="btn-hover-black">disabled</a>
-                                                </div>
-                                            {% else %}
-                                                <Button type="submit">
+                                                <Button type="submit" {% if variant.quantity < 1  %} disabled {% endif %}>
                                                     <div class="quickview-btn-cart">
                                                         <a class="btn-hover-black" style="color: white;">add to cart</a>
                                                     </div>
                                                </Button>
-                                            {% endif %}
                                         </div>
                                     </div>
                                  </form>
                             {% else %}
                                   <form action="/order/addtoshopcart/{{ product.id }}" method="post"  id="addchart-form">
                                     {% csrf_token %}
-                                    <input type="hidden" name="variantid" id="variantid" value="{{ variant.id }}">
                                     <div class="product-details-cati-tag mt-35" id="SelectedProduct">
                                         <ul>
                                             <li class="categories-title">Availability :</li>
-                                            <li><a> {% if product.amount > 0  %} In Stock {% else %} Out of Stock {% endif %}</a></li>
+                                            <li><a> {% if product.amount > 0  %} <h5><b>In Stock</b></h5> {% else %} <h5><b>Out of Stock</b></h5> {% endif %}</a></li>
                                         </ul>
                                         <ul>
                                             <li class="categories-title"></li>
@@ -732,22 +719,15 @@
                                            <div>
                                                 <input class="input" type="number" value="1" min="1" max="{{ product.amount }}" name="quantity" class="cart-plus-minus-box" >
                                             </div>
-                                            {% if product.amount < 1  %}
-                                                <div class="quickview-btn-cart">
-                                                    <a class="btn-hover-black">disabled</a>
-                                                </div>
-                                            {% else %}
-                                                <Button type="submit">
+                                                <Button type="submit" {% if variant.quantity < 1  %} disabled {% endif %}>
                                                     <div class="quickview-btn-cart">
                                                         <a class="btn-hover-black" style="color: white;">add to cart</a>
                                                     </div>
                                                </Button>
-                                            {% endif %}
                                         </div>
                                     </div>
                                  </form>
                             {% endif %}
-                                </form>
                             </div>
                             </div>
                         </div>
@@ -756,6 +736,7 @@
                 </div>
             </div>
         </div>
+
         <div class="product-description-review-area pb-90">
             <div class="container">
                 <div class="blog-feature">
@@ -1102,6 +1083,28 @@
         </footer>
 
         <style>
+
+
+
+
+.boxed label {
+  display: inline-block;
+  width: fit;
+  padding: 10px;
+  border: solid 2px #ccc;
+  transition: all 0.3s;
+}
+
+.boxed input[type="radio"] {
+  display: none;
+}
+
+.boxed input[type="radio"]:checked + label {
+  border: solid 2px green;
+}
+
+
+
 label { display: inline-block }
 label > input { /* HIDE RADIO */
   visibility: hidden; /* Makes input not-clickable */

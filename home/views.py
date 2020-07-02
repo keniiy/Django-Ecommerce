@@ -1,18 +1,18 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from django.template.loader import render_to_string
 from home.models import Setting
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
-from home.models import ContactForm, ContactMessages
-from product.models import Category, Product, Images
+from home.models import ContactForm, ContactMessages, Setting
+from product.models import Category, Product, Images, Comment, Variants
 from home.forms import SearchForm
 from django.db.models import Q
 import json
-from product.models import Comment
+
 
 
 def index(request):
-    setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
     products_slider = Product.objects.all().order_by('id')[:4]
     products_latest = Product.objects.all().order_by('-id')[:4]
@@ -26,10 +26,7 @@ def index(request):
     products_discount = list(Product.objects.filter(discount_home=True).order_by('id'))[0:10]
     products_kids = list(Product.objects.filter(kids_home=True).order_by('id'))[0:10]
 
-    page = "home"
     context = {
-        'setting': setting,
-        'page': page,
         'products_slider': products_slider,
         'products_latest': products_latest,
         'products_picked': products_picked,
@@ -48,9 +45,7 @@ def index(request):
 
 def aboutus(request):
     setting = Setting.objects.get(pk=1)
-    context = {
-        'setting': setting
-    }
+    context = {'setting': setting}
     return render(request, 'about.html', context)
 
 def contactus(request):
@@ -110,14 +105,43 @@ def search(request):
     return render(request, 'search_products.html', context)
 
 def product_detail(request,id,slug):
+    query = request.GET.get('q')
     category = Category.objects.all()
     product = Product.objects.get(pk=id)
     images = Images.objects.filter(product_id=id)
     comments = Comment.objects.filter(product_id=id, status='True')
-    context = {
-        'product': product,
-        'category': category,
-        'images': images,
-        'comments': comments
-    }
-    return render(request, 'product-details.html', context)
+    context = {'product': product, 'category': category,
+               'images': images, 'comments': comments,
+               }
+    if product.variant != "None":  # Product have variants
+        if request.method == 'POST':  # if we select color
+            variant_id = request.POST.get('variantid')
+            variant = Variants.objects.get(id=variant_id)  # selected product by click color radio
+            colors = Variants.objects.filter(product_id=id, size_id=variant.size_id)
+            sizes = Variants.objects.raw('SELECT * FROM  product_variants  WHERE product_id=%s GROUP BY size_id',[id])
+            query += variant.title + ' Size:' + str(variant.size) + ' Color:' + str(variant.color)
+        else:
+            variants = Variants.objects.filter(product_id=id)
+            colors = Variants.objects.filter(product_id=id, size_id=variants[0].size_id)
+            sizes = Variants.objects.raw('SELECT * FROM  product_variants  WHERE product_id=%s GROUP BY size_id',[id])
+            variant = Variants.objects.get(id=variants[0].id)
+        context.update({'sizes': sizes, 'colors': colors,
+                        'variant': variant, 'query': query
+                        })
+    return render(request, 'product_detail.html', context)
+
+
+def ajaxcolor(request):
+    data = {}
+    if request.POST.get('action') == 'post':
+        size_id = request.POST.get('size')
+        productid = request.POST.get('productid')
+        colors = Variants.objects.filter(product_id=productid, size_id=size_id)
+        context = {
+            'size_id': size_id,
+            'productid': productid,
+            'colors': colors,
+        }
+        data = {'rendered_table': render_to_string('color_list.html', context=context)}
+        return JsonResponse(data)
+    return JsonResponse(data)

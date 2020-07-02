@@ -623,10 +623,15 @@
                                             {% for rs in shopcart %}
                                                     <tr class="cart_item">
                                                         <td class="product-name">
-                                                            {{ rs.product }} <strong class="product-quantity"> × {{ rs.quantity }}</strong>
+                                                            {{ rs.product }} {{ rs.variant.size }} {{ rs.variant.color }} <strong class="product-quantity"> × {{ rs.quantity }}</strong>
                                                         </td>
                                                         <td class="product-total">
-                                                            <span class="amount">₦{{ rs.amount }}</span>
+                                                            <span class="amount">
+                                                        {% if rs.product.variant == 'None' %}
+                                                            <p>₦{{ rs.product.price }}</p>
+                                                         {% else %}
+                                                            <p>₦{{ rs.variant.price }}</p>
+                                                         {% endif %}</span>
                                                         </td>
                                                     </tr>
                                             {% endfor %}
