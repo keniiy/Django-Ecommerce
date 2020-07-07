@@ -10,19 +10,22 @@ from user.models import UserProfile
 from user.forms import SignUpForm
 from user.forms import ProfileUpdateForm, UserUpdateForm
 from order.models import Order, OrderProduct
-from home.models import FAQ
+from home.models import FAQ, Setting
 
 
 @login_required(login_url='/login') # Check login
 def index(request):
+    setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
-    current_user = request.user # access user session information
+    current_user = request.user     # access user session information
     profile = UserProfile.objects.get(user_id=current_user.id)
     context = {
+        'setting': setting,
         'category': category,
         'profile': profile
     }
     return render(request, 'user_profile.html', context)
+
 
 def login_form(request):
     if request.method == 'POST':
@@ -42,10 +45,13 @@ def login_form(request):
             return HttpResponseRedirect('/login')
     #return an invalid login error messae
 
-
+    user_login = "user_login"
+    setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
     context = {
-        'category': category
+        'category': category,
+        'user_login': user_login,
+        'setting': setting
     }
     return render(request, 'login_form.html',context)
 
@@ -70,10 +76,14 @@ def signup_form(request):
             messages.warning(request, form.errors)
             return HttpResponseRedirect('/signup')
     form = SignUpForm
+    user_login = "user_login"
+    setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
     context = {
         'category': category,
-        'form': form
+        'form': form,
+        'user_login': user_login,
+        'setting': setting
     }
     return render(request, 'signup_form.html',context)
 
@@ -92,10 +102,12 @@ def user_update(request):
             messages.success(request, 'Your account has been updated!')
             return HttpResponseRedirect('/user')
     else:
+        setting = Setting.objects.get(pk=1)
         category = Category.objects.all()
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileUpdateForm(instance=request.user.userprofile)
         context = {
+            'setting': setting,
             'category': category,
             'user_form': user_form,
             'profile_form': profile_form
@@ -115,9 +127,11 @@ def user_password(request):
             messages.error(request, 'pls correct the error below.<br>' + str(form.errors))
             return HttpResponseRedirect('/user/password')
     else:
+        setting = Setting.objects.get(pk=1)
         category = Category.objects.all()
         form = PasswordChangeForm(request.user)
         context = {
+            'setting': setting,
             'category': category,
             'form': form
         }
@@ -125,10 +139,12 @@ def user_password(request):
 
 @login_required(login_url='/login')
 def user_order(request):
+    setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
     current_user = request.user
     orders = Order.objects.filter(user_id=current_user.id)
     context = {
+        'setting': setting,
         'category': category,
         'orders': orders
     }
@@ -136,11 +152,13 @@ def user_order(request):
 
 @login_required(login_url='/login')
 def user_orderdetail(request,id):
+    setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
     current_user = request.user
     order = Order.objects.get(user_id=current_user.id, id=id)
     orderitems = OrderProduct.objects.filter(order_id=id)
     context = {
+        'setting': setting,
         'category': category,
         'order': order,
         'orderitems': orderitems
@@ -149,22 +167,27 @@ def user_orderdetail(request,id):
 
 @login_required(login_url='/login')
 def user_order_product(request):
+    setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
     current_user = request.user
     order_product = OrderProduct.objects.filter(user_id=current_user.id)
     context = {
+        'setting': setting,
         'category': category,
         'order_product': order_product
     }
     return render(request, 'user_order_products.html', context)
 
 
+@login_required(login_url='/login')
 def user_order_product_detail(request,id,oid):
+    setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
     current_user = request.user
     order = Order.objects.get(user_id=current_user.id, id=oid)
     orderitems = OrderProduct.objects.filter(id=id, user_id=current_user.id)
     context = {
+        'setting': setting,
         'category': category,
         'order': order,
         'orderitems': orderitems
@@ -173,12 +196,14 @@ def user_order_product_detail(request,id,oid):
 
 @login_required(login_url='/login')
 def user_comments(request):
+    setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
     current_user = request.user
     comments = Comment.objects.filter(user_id=current_user.id)
     current_user = request.user  # access user session information
     profile = UserProfile.objects.get(user_id=current_user.id)
     context = {
+        'setting': setting,
         'category': category,
         'comments': comments,
         'profile': profile
@@ -193,9 +218,11 @@ def user_deletecomment(request,id):
     return HttpResponseRedirect('/user/comments')
 
 def faq(request):
+    setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
     faq = FAQ.objects.all()
     context = {
+        'setting': setting,
         'category': category,
         'faq': faq
     }

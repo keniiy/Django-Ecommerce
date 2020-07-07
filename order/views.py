@@ -9,6 +9,7 @@ from django.utils.crypto import get_random_string
 from order.models import ShopCart, ShopCartForm, OrderForm, Order, OrderProduct
 from product.models import Category, Product, Variants
 from user.models import UserProfile
+from home.models import Setting
 
 
 def index(request):
@@ -62,6 +63,7 @@ def addtoshopcart(request, id):
 
 
 def shopcart(request):
+    setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
     current_user = request.user  # Access User Session information
     shopcart = ShopCart.objects.filter(user_id=current_user.id)
@@ -76,6 +78,7 @@ def shopcart(request):
     context = {'shopcart': shopcart,
                'category': category,
                'total': total,
+               'setting': setting
                }
     return render(request, 'shopcart.html', context)
 
@@ -88,6 +91,7 @@ def deletefromcart(request, id):
 
 
 def orderproduct(request):
+    setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
     current_user = request.user
     shopcart = ShopCart.objects.filter(user_id=current_user.id)
@@ -145,7 +149,7 @@ def orderproduct(request):
             ShopCart.objects.filter(user_id=current_user.id).delete()  # Clear & Delete shopcart
             request.session['cart_items'] = 0
             messages.success(request, "Your Order has been completed. Thank you ")
-            return render(request, 'Order_Completed.html', {'ordercode': ordercode, 'category': category})
+            return render(request, 'Order_Completed.html', {'ordercode': ordercode, 'category': category, 'setting': setting})
         else:
             messages.warning(request, form.errors)
             return HttpResponseRedirect("/order/orderproduct")
@@ -157,5 +161,6 @@ def orderproduct(request):
                'total': total,
                'form': form,
                'profile': profile,
+               'setting': setting,
                }
     return render(request, 'Order_Form.html', context)

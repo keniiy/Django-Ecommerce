@@ -1,74 +1,103 @@
 {% extends "homebase.html" %}
-
-{% block title %} Contact US-{{ setting.title }} {% endblock %}
+{% load static %}
+{% block title %} {{setting.title}}-Contact US-{% endblock %}
 {% block description %} {{setting.description}} {% endblock %}
 {% block keywords %} {{setting.keywords}} {% endblock %}
 
-{% block sidebar %}
-    {% include "sidebar.html" %}
-{% endblock %}
-
-
-
 {% block body %}
 
-	<!-- BREADCRUMB -->
-	<div id="breadcrumb">
-		<div class="container">
-			<ul class="breadcrumb">
-				<li><a href="/">Home</a></li>
-				<li class="active">Contact Us</li>
-			</ul>
-		</div>
-	</div>
-    <!-- /BREADCRUMB -->
-    
-	<!-- section -->
-	<div class="section">
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-                    
-                        <div class="col-md-4">
-                                <div class="billing-details">
+<div class="breadcrumb-area pt-205 breadcrumb-padding pb-210"
+     style="background-image: url({% static '' %}assets/img/bg/breadcrumb.jpg)">
+    <div class="container-fluid">
+        <div class="breadcrumb-content text-center">
+            <ul>
+                <li><a href="\">home</a></li>
+                <li>Contact Us</li>
+            </ul>
+        </div>
+    </div>
+</div>
 
-                                        <div class="section-title">
-                                            <h3 class="title">Contact Form</h3>
-                
-                                        </div>
-                
-                                        {% if messages %}
-                                            {% for message in messages %}
-                                                <div class="alert alert-{{message.tags}}" role="alert">
-                                                    {{ message }}
-                                                </div>
-                                            {% endfor %}
-                                        {% endif %}
-                
-                                        <form id="checkout-form" class="clearfix" method="post">
-                                            {% csrf_token %}
-                                            {{ form.as_p }}
-                                            <input type="submit" value="SEND FORM">
-                                        </form>
-                
-                
-                                    </div>
+
+<!-- shopping-cart-area start -->
+<div class="contact-area ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="contact-map-wrapper">
+
+                    <div class="contact-message">
+                        <div class="contact-title">
+                            <h4>Contact Us</h4>
                         </div>
-
-                        <div class="col-md-8">
-                                <div class="shiping-methods">
-                                    <div class="section-title">
-                                        <h3 class="title">Contact İnformation</h3>
+                        <form id="checkout-form" class="contact-form" method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="contact-input-style mb-30">
+                                        <label>Name*</label>
+                                        {{ form.name }}
                                     </div>
-                                    {{ setting.contact | safe }}
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="contact-input-style mb-30">
+                                        <label>Email*</label>
+                                        {{ form.email }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="contact-input-style mb-30">
+                                        <label>Telephone</label>
+                                        {{ form.telephone }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="contact-input-style mb-30">
+                                        <label>subject</label>
+                                        {{ form.subject }}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="contact-textarea-style mb-30">
+                                        <label>Comment*</label>
+                                        {{ form.message }}
+                                    </div>
+                                    <button class="submit contact-btn btn-hover" value="SEND FORM" type="submit">
+                                        Send Message
+                                    </button>
                                 </div>
                             </div>
+                        </form>
+                    </div>
                 </div>
-                <!-- /row -->
             </div>
-            <!-- /container -->
+            <div class="col-lg-4">
+                <div class="contact-info-wrapper">
+                    <div class="contact-title">
+                        <h4> Contact Location & Details</h4>
+                    </div>
+                    <div class="contact-info">
+                        <div class="single-contact-info">
+                            <div class="contact-info-icon">
+                                <i class="pe-7s-mail"></i>
+                            </div>
+                            <div class="contact-info-text">
+                                <p><span>Email: </span>{{ setting.email }}</p>
+                            </div>
+                        </div>
+                        <div class="single-contact-info">
+                            <div class="contact-info-icon">
+                                <i class="pe-7s-call"></i>
+                            </div>
+                            <div class="contact-info-text">
+                                <p><span>Phone: </span> {{ setting.phone }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- /section -->
-
+    </div>
+</div>
+<!-- product area end -->
 {% endblock %}

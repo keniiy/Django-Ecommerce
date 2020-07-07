@@ -1,80 +1,49 @@
 {% load static %}
-<!-- NAVIGATION -->
-	<div id="navigation">
-            <!-- container -->
-            
-            <div class="container">
-                <div id="responsive-nav">
-                    <!-- category nav -->
-                    
-                    {% if page %}
-                    <div class="category-nav">
-                    {% else %}
-                      <div class="category-nav show-on-click">
-                    {% endif %}
 
-                        <span class="category-header">Categories <i class="fa fa-list"></i></span>
-
-                        {% load mptt_tags %}
-                        <ul class="category-list">
-                            {% recursetree category %}
-                            <li class="dropdown side-dropdown">
-                                <a href="/category/{{ node.id }}/{{ node.slug }}" class="dropdown-toggle" {% if not node.is_leaf_node %} data-toggle="dropdown" aria-expanded="true" {% endif %}>{{ node.title }} <i class="fa fa-angle-right"></i></a>
-                                <div class="custom-menu">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            {% if not node.is_leaf_node %}
-                                            <ul class="list-links">
-                                                <li>
-                                                    <h3 class="list-links-title">Sub Categories</h3></li>
-                                                <li><a href="#">{{ children }}</a></li>
-                                            </ul>
-                                            {% endif %}
-                                            <hr class="hidden-md hidden-lg">
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            {% endrecursetree %}
-                            
-                        </ul>
-                    </div>
-                    <!-- /category nav -->
-    
-                    <!-- menu nav -->
-                    <div class="menu-nav">
-                        <span class="menu-header">Menu <i class="fa fa-bars"></i></span>
-                        <ul class="menu-list">
-                            <li><a href="/">Home</a></li>
-                            <li><a href="/about">About Us</a></li>
-                            <li class="dropdown mega-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Women <i class="fa fa-caret-down"></i></a>
-                                <div class="custom-menu">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <ul class="list-links">
-                                                <li>
-                                                    <h3 class="list-links-title">Categories</h3></li>
-                                                <li><a href="#">Women’s Clothing</a></li>
-                                                <li><a href="#">Men’s Clothing</a></li>
-                                                <li><a href="#">Phones & Accessories</a></li>
-                                                <li><a href="#">Jewelry & Watches</a></li>
-                                                <li><a href="#">Bags & Shoes</a></li>
-                                            </ul>
-                                            <hr class="hidden-md hidden-lg">
-                                        </div>
-                                        
-                                       
-                                    </div>
-                                   
-                                </div>
-                            <li><a href="/contact">contact</a></li>
-                        
-
-                        </ul>
-                    </div>
-                    <!-- menu nav -->
-                </div>
+<div class="categori-menu-wrapper2 clearfix">
+    <div class="pl-200 pr-200">
+        <div class="categori-style-2">
+            <div class="category-heading-2">
+                <ul style="padding-top:12px">
+                 {% if user.id is none %}
+                <h4><li style="color:white;>Get Access:<a href="/login">Login</a></i><a href="/register">/Reg </a></li></h4>
+                 {% else %}
+                <h4><li style="color:white;">Hello: <a>{{ user.first_name }}</a></i><a href="/logout"> / logout </a></li></h4>
+                 {% endif %}
+                </ul>
             </div>
-            <!-- /container -->
         </div>
-        <!-- /NAVIGATION -->
+        <div class="menu-style-4 menu-hover">
+            <nav>
+                <ul>
+                    <li><a href="/">home</i></a></li>
+                    <li><a href="#">SHOP CARTEGORIES<i class="pe-7s-angle-down"></i></a>
+                            <div class="category-menu-dropdown shop-menu">
+                            {% load mptt_tags %}
+                            {% recursetree category %}
+                                <div class="category-dropdown-style category-common2 mb-30">
+
+                                    <h4><a href="/category/{{ node.id }}/{{ node.slug }}">{{node.title}}</a></h4>
+                                    <ul>
+                                        {% if not node.is_leaf_node %}
+                                        <li><a href=""> {{children}}</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                                {% endrecursetree %}
+                                <div class="mega-banner-img">
+                                    <a href="single-product.html">
+                                        <img src="assets/img/banner/18.jpg" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    <li><a href="#">blog</a></li>
+                    <li><a href="/contact">Contact Us</a></li>
+                    <li><a href="/about">About Us</a></li>
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
