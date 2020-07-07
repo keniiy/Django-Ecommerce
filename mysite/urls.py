@@ -31,7 +31,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('about/', views.aboutus, name='aboutus'),
     path('contact/', views.contactus, name='contactus'),
-    path('search/', views.search, name='search'),  
+    path('search/', views.search, name='search'),
     path('category/<int:id>/<slug:slug>', views.category_products, name='category_products'),
     path('product/<int:id>/<slug:slug>', views.product_detail, name='product_detail'),
     path('shopcart/', OrderViews.shopcart, name='shopcart'),
@@ -40,4 +40,6 @@ urlpatterns = [
     path('signup/', UserViews.signup_form, name='signup_form'),
     path('faq/', UserViews.faq, name='faq'),
     path('ajaxcolor/', views.ajaxcolor, name='ajaxcolor'),
+    path('blog/', include('blog.urls', namespace='blog')),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
