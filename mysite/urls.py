@@ -21,6 +21,7 @@ from mysite import settings
 from order import views as OrderViews
 from user import views as UserViews
 
+
 urlpatterns = [
     path('', include('home.urls')),
     path('home/', include('home.urls')),

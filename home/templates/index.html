@@ -118,6 +118,7 @@
                 </div>
                 <div class="header-search">
                     <form action="{% url 'search' %}">
+                        {% csrf_token %}
                         <input type="text" name="q" placeholder="Search For Product">
                         <button type="submit" class="submit">
                             <i class="ti-search"></i>

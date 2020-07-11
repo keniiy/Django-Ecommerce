@@ -1,0 +1,13 @@
+<div class="col-12">
+    <div class="pagination-style mt-20 text-center">
+        <ul>
+            {% if queryset.has_previous %}
+            <li><a href="?{{ page_request_var }}={{ queryset.previous_page_number }}"><i class="ti-angle-left"></i></a></li>
+            {% endif %}
+            <li>Page {{ queryset.number }} of {{ queryset.paginator.num_pages }}</li>
+            {% if queryset.has_next %}
+            <li class="active"><a href="?{{ page_request_var }}={{ queryset.next_page_number }}"><i class="ti-angle-right"></i></a></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

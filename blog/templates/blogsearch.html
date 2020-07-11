@@ -24,29 +24,38 @@
             <div class="col-lg-8">
                 <div class="blog-mesonry">
                     <div class="row grid">
-                        {% for rs in queryset %}
+                        {% if messages %}
+                            <ul class="messages">
+                                {% for k in messages %}
+                                    <li style="color: red">{{ k }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        {% if sr %}
+                        {% for k in sr %}
                         <div class="col-lg-6 col-md-6 grid-item">
                             <div class="blog-wrapper mb-40">
                                 <div class="blog-img">
-                                    <a href="{{ rs.get_absolute_url }}"><img src="{{rs.thumbnails.url}}" height="300px" width="200px" overflow="hidden" alt=""></a>
+                                    <a href="{{ k.get_absolute_url }}"><img src="{{k.thumbnails.url}}" height="300px" width="200px" overflow="hidden" alt=""></a>
                                 </div>
                                 <div class="blog-info-wrapper">
                                     <div class="blog-meta">
                                         <ul>
-                                            <li><a href="{{ rs.get_absolute_url }}"><img src="{{ rs.author.profile_picture.url }}" height="30px" width="30px" overflow="hidden" style="border-radius: 40px"></a></li>
-                                            <li>{{ rs.publish }} <b>by {{ rs.author.user.username }}</b></li>
-                                            {% for rs in rs.blog_categories.all %}
-                                            <li><a>{{ rs }}</a></li>
+                                            <li><a href="{{ k.get_absolute_url }}"><img src="{{ k.author.profile_picture.url }}" height="30px" width="30px" overflow="hidden" style="border-radius: 40px"></a></li>
+                                            <li>{{ k.publish }} <b>by {{ k.author.user.username }}</b></li>
+                                            {% for k in k.blog_categories.all %}
+                                            <li><a>{{ k }}</a></li>
                                             {% endfor %}
                                         </ul>
                                     </div>
-                                    <h4><a href="{{	rs.get_absolute_url	}}">{{ rs.title }}</a></h4>
-                                    <p>{{ rs.overview|truncatewords:10|linebreaks }}</p>
+                                    <h4><a href="{{	k.get_absolute_url	}}">{{ k.title }}</a></h4>
+                                    <p>{{ k.overview|truncatewords:10|linebreaks }}</p>
                                     <a class="blog-btn btn-hover" href="">Read More</a>
                                 </div>
                             </div>
                         </div>
                         {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
                 <div class="row">

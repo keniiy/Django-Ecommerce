@@ -1,0 +1,72 @@
+<div class="col-lg-4">
+                <div class="shop-sidebar">
+                    <div class="sidebar-widget mb-50">
+                        <img src="{{ author.profile_picture.url }}" height="300px" alt="">
+                        <div class="sidebar-img-content">
+                            <p>{{ author.about }}</p>
+                            <h4>{{ author.name }}</h4>
+                            <span>Author</span>
+                            <div class="sidebar-img-social">
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icofont icofont-social-facebook"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icofont icofont-social-twitter"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icofont icofont-social-pinterest"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icofont icofont-social-flikr"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar-widget mb-50">
+                        <h3 class="sidebar-title">Search Blog</h3>
+                        <div class="sidebar-search">
+                            <form method="post" action="/blog/searches/">
+                                {% csrf_token %}
+                                <input type="text" name="srh" placeholder="Search For Latest Blog Post">
+                                <button type="submit">
+                                    <i class="ti-search"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="sidebar-widget mb-45">
+                        <h3 class="sidebar-title">Categories</h3>
+                        <div class="sidebar-categories">
+                            <ul>
+                                <li><a href="#">Accessories <span>4</span></a></li>
+                                <li><a href="#">Book <span>9</span></a></li>
+                                <li><a href="#">Clothing <span>5</span> </a></li>
+                                <li><a href="#">Homelife <span>3</span></a></li>
+                                <li><a href="#">Kids & Baby <span>4</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="sidebar-widget mb-45">
+                        <h3 class="sidebar-title">Tags</h3>
+                        <div class="blog-tags-style">
+                            <ul>
+                                <li><a href="#">Support</a></li>
+                                <li><a href="#">Creative</a></li>
+                                <li><a href="#">Design</a></li>
+                                <li><a href="#">Print</a></li>
+                                <li><a href="#">Adobe</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
