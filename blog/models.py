@@ -18,9 +18,19 @@ class Author(models.Model):
 
 class Blog_Category(models.Model):
     title = models.CharField(max_length=20)
+    slug = models.SlugField(max_length=100)
+
+    class Meta:
+        ordering = ('title',)
+
+    verbose_name = 'category'
+    verbose_name_plural = 'categories'
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('blog:index_by_category', args=[self.slug])
 
 
 class PublishedManager(models.Manager):
@@ -41,7 +51,7 @@ class Post(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     thumbnails = models.ImageField(default=None)
-    blog_categories = models.ManyToManyField(Blog_Category)
+    category = models.ManyToManyField(Blog_Category)
     publish = models.DateTimeField(default=timezone.now)
     objects = models.Manager()  # The default manager.
     published = PublishedManager()  # Our custom manager.

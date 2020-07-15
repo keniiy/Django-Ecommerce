@@ -48,11 +48,15 @@
                         <h3 class="sidebar-title">Categories</h3>
                         <div class="sidebar-categories">
                             <ul>
-                                <li><a href="#">Accessories <span>4</span></a></li>
-                                <li><a href="#">Book <span>9</span></a></li>
-                                <li><a href="#">Clothing <span>5</span> </a></li>
-                                <li><a href="#">Homelife <span>3</span></a></li>
-                                <li><a href="#">Kids & Baby <span>4</span></a></li>
+                                <li {% if not category %}class="selected"{% endif %}>
+                                    <a href="{% url "blog:index" %}">All</a>
+                                </li>
+                                {% for rs in categories %}
+                                <li {% if category.slug == rs.slug %}class="selected"
+                                {% endif %}>
+                                <a href="{{ rs.get_absolute_url }}">{{ rs.title }}</a>
+                                </li>
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>

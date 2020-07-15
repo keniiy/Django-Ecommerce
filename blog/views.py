@@ -6,13 +6,18 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
 from .forms import CommentForm
-from .models import Post, Author
+from .models import Post, Author, Blog_Category
 from product.models import Category
 
 
-def index(request):
+def index(request, category_slug=None):
+    blog = "blog"
+    category = None
+    categories = Blog_Category.objects.all()
     post_list = Post.published.all()
-    category = Category.objects.all()
+    if category_slug:
+        category = get_object_or_404(Blog_Category, slug=category_slug)
+        post_list = post_list.filter(category=category)
     paginator = Paginator(post_list, 6)
     page_request_var = 'page'
     page = request.GET.get(page_request_var)
@@ -25,7 +30,9 @@ def index(request):
     context = {
         'queryset': paginated_queryset,
         'category': category,
-        'page_request_var': page_request_var
+        'categories': categories,
+        'page_request_var': page_request_var,
+        'blog': blog,
     }
     return render(request, 'blog.html', context)
 
@@ -82,4 +89,5 @@ def searches(request):
         else:
             return HttpResponseRedirect('/search')
     return render(request, 'blogsearch.html', {'sr': match, 'category': category})
+
 

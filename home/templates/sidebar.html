@@ -17,6 +17,9 @@
             <nav>
                 <ul>
                     <li><a href="/">home</i></a></li>
+                    {% if blog %}
+
+                    {% else %}
                     <li><a href="#">SHOP CARTEGORIES<i class="pe-7s-angle-down"></i></a>
                             <div class="category-menu-dropdown shop-menu">
                             {% load mptt_tags %}
@@ -38,7 +41,8 @@
                                 </div>
                             </div>
                         </li>
-                    <li><a href="#">blog</a></li>
+                    {% endif %}
+                    <li><a href="/blog">Blog</a></li>
                     <li><a href="/contact">Contact Us</a></li>
                     <li><a href="/about">About Us</a></li>
 

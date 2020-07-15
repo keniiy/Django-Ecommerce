@@ -92,6 +92,9 @@
                             {% else %}
                             <li><a>LOGOUT</a></li>
                             {% endif %}
+                            {% if blog %}
+
+                            {% else %}
                             <li><a>CATEGORY</a></li>
                             {% recursetree category %}
                             <li><a href="/category/{{ node.id }}/{{ node.slug }}">{{node.title}}</a>
@@ -102,6 +105,7 @@
                                 {% endif %}
                             </li>
                             {% endrecursetree %}
+                            {% endif %}
                             <li><a href="#">BLOG</a></li>
                             {% if user.id is not none %}
                             <li><a>My Account</a>
